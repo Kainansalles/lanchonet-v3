@@ -1,7 +1,4 @@
 <?php
-
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +10,71 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::post('clients/new', 'ClientsController@setNewUser');//->middleware(['cors']);
+Route::post('clients/recoverpw', 'ClientsController@recoverPW');
+Route::group([
+    'prefix' => 'clients',
+    'middleware' => 'jwt.auth'
+], function () {
+    Route::post('/edituser', 'ClientsController@editUser');
+    Route::post('/editpw', 'ClientsController@editPW');
+});
+
+Route::get('clients/auth/dataclient', 'Auth\ClientsController@getDataAuthUser')->middleware('jwt.auth');
+Route::group([
+    'namespace' => 'Auth',
+    'prefix' => 'clients/auth'
+], function () {
+    Route::post('/authenticate', 'ClientsController@Authenticate');
+    Route::post('/refresh', 'ClientsController@Refresh');
+    Route::post('/logout', 'ClientsController@Logout');
+});
+
+Route::group([
+    //'middleware' => 'api',
+    'prefix' => 'password/reset'
+], function () {
+    Route::post('/create', 'PasswordResetController@create');
+    Route::get('/find/{token}', 'PasswordResetController@find');
+    Route::post('/reset', 'PasswordResetController@reset');
+});
+
+Route::group([
+    //'middleware' => 'cors',
+    'prefix' => 'products'
+], function () {
+    Route::get('/all', 'ProductsController@getAll');
+    Route::get('/{id}', 'ProductsController@getProduct');
+});
+
+Route::group([
+    'prefix' => 'demand',
+    //'middleware' => 'jwt.auth'
+],
+    function () {
+        Route::post('/make', 'DemandsController@doDemand');
+    });
+
+use App\Models\DemandxProduct;
+
+Route::get('testes', function(){
+    /*
+    SELECT pro.name AS title, count(*) AS value
+	FROM `demand_x_products` AS de
+	INNER JOIN products AS pro
+    	ON de.product_id = pro.id
+    GROUP BY product_id ORDER BY value DESC LIMIT 3;
+    */
+
+    $data = DemandxProduct::select(\DB::raw('products.name as title, count(*) as value'))
+        ->join('products', 'demand_x_products.product_id', '=', 'products.id')
+        ->groupBy('product_id')
+        ->orderBy('value', 'DESC')
+        ->limit(3)
+        ->get();
+    return response()->json($data);
 });

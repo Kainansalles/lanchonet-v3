@@ -21,29 +21,30 @@
 
 	<link href="{{ asset('css/vendors.bundle.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    @stack('lanchonet-css')
 </head>
 
 <body  class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >
-		<!-- begin:: Page -->
-		<div class="m-grid m-grid--hor m-grid--root m-page">
-			<!-- BEGIN: Header -->
-            @include('partials.header')
-			<!-- END: Header -->
-		<!-- begin::Body -->
-			<div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
-	<!-- BEGIN: Left Aside -->
-				<button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn">
-					<i class="la la-close"></i>
-                </button>
-                @include('partials.menu')
-                @yield('content')
-</div>
-<!-- end:: Body -->
-<!-- begin::Footer -->
-@include('partials.footer')
-<!-- end::Footer -->
-</div>
-<!-- end:: Page -->
+    <!-- begin:: Page -->
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <!-- BEGIN: Header -->
+        @include('partials.header')
+        <!-- END: Header -->
+        <!-- begin::Body -->
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <!-- BEGIN: Left Aside -->
+            <button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn">
+                <i class="la la-close"></i>
+            </button>
+            @include('partials.menu')
+            @yield('content')
+        </div>
+    <!-- end:: Body -->
+    <!-- begin::Footer -->
+    @include('partials.footer')
+    <!-- end::Footer -->
+    </div>
+    <!-- end:: Page -->
 	<!-- begin::Scroll Top -->
 <div id="m_scroll_top" class="m-scroll-top">
 	<i class="la la-arrow-up"></i>
@@ -54,4 +55,5 @@
 <script src="{{ asset('js/vendors.bundle.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/scripts.bundle.js') }}" type="text/javascript"></script>
 <!--end::Base Scripts -->
+@stack('lanchonet-js')
 </html>
