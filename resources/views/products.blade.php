@@ -47,62 +47,133 @@
                         <span aria-hidden="true"> &times;</span>
                     </button>
                 </div>
-                <div class="alert alert-danger" id="msg-prod" style="display:none">
-                    <ul></ul>
-                </div>
                 <div class="modal-body">
                     <form role="form" class="md-form" id="produtosForm" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="id_save" id="id_save" value="">
                         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                        <div class="form-group has-feedback">
-                            <label for="name">Nome</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Nome"/>
-                        </div>
 
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="price_cost">Preço de custo</label>
-                                <input type="text" name="price_cost" class="form-control"
-                                       id="price_cost" placeholder="R$"/>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="price_sale">Preço de venda</label>
-                                <input type="text" name="price_sale" class="form-control"
-                                       id="price_sale" placeholder="R$"/>
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-2 col-form-label">
+                                Nome:
+                            </label>
+                            <div class="col-lg-12">
+                                <input type="text" name="name" class="form-control m-input" id="name" placeholder="Nome" data-toggle="m-tooltip" title="Informe o nome do produto"/>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="form-group col-md-8 col-sm-8 col-xs-8">
-                                <input type="file" name="url_image" class="btn btn-sm float-left"
-                                       id="url_image" value="" placeholder="URL da imagem"/>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-lg-6 col-form-label">
+                                    Preço de custo:
+                                </label>
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" name="price_cost" class="form-control m-input" id="price_cost" placeholder="R$"/>
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span>
+                                            <i class="la la-calculator"></i>
+                                        </span>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="col-md-4">
+
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-lg-6 col-form-label">
+                                    Preço de venda:
+                                </label>
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" name="price_sale" class="form-control m-input" id="price_sale" placeholder="R$"/>
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span>
+                                            <i class="la la-calculator"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-8 col-sm-8 col-xs-8 col-lg-8">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="url_image" id="url_image">
+                                    <label class="custom-file-label" for="customFile">
+                                        Escolha um arquivo
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4">
                                 <img src="" class="img-responsive" id="imagem" alt="Foto do produto">
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="form-group col-md-6 col-sm-6 col-xs-6">
+
+                        <div class="form-group col-md-6 col-sm-6 col-xs-6">
                                 <label for="validade">Validade</label>
                                 <input type="date" name="validade" class="form-control"
                                        id="validade" placeholder="Validade do produto"/>
                             </div>
-                            <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                                <label for="quantity">Quantidade</label>
-                                <input type="number" name="quantity" class="form-control"
-                                       id="quantity" placeholder="Quantidade"/>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-lg-6 col-form-label">
+                                    Validade:
+                                </label>
+                                <div class="input-group date" >
+                                    <input type="text" class="form-control m-input" name="validade" readonly id="m_datepicker_3_modal"/>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-lg-6 col-form-label">
+                                    Quantidade:
+                                </label>
+                                <div class="input-group date" >
+                                    <input type="number" class="form-control m-input" id="quantity" name="quantity">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-calculator"></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group shadow-textarea">
-                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Descrição do produto..."></textarea>
+                        <div class="form-group m-form__group row">
+                            <label class="col-form-label col-lg-3 col-sm-12">
+                                Descrição
+                            </label>
+                            <div class="col-lg-12">
+                                <textarea class="form-control m-input" name="description" id="description" name="description" rows="3" placeholder="Descrição do produto.."></textarea>
+                            </div>
                         </div>
-                        <label class="radio-inline"><input type="radio" name="status" id="ativo" value="1">Ativo</label>
-                        <label class="radio-inline"><input type="radio" name="status" id="inativo" value="0">Inativo</label>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>
+                                    Status
+                                </label>
+                                <div class="m-radio-inline">
+                                    <label class="m-radio m-radio--solid">
+                                        <input type="radio" name="status" id="ativo" value="1">
+                                        Ativo
+                                        <span></span>
+                                    </label>
+                                    <label class="m-radio m-radio--solid">
+                                        <input type="radio" name="status" id="ativo" value="0">
+                                        Inativo
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn m-btn btn-success m-btn--custom m-loader m-loader--light m-loader--right" id="salvar" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processando">Salvar</button>
+                            <button type="submit" class="btn btn-primary" id="salvar">Salvar</button>
                         </div>
                     </form>
                 </div>
@@ -117,6 +188,8 @@
     <script src="{{ asset('js/datatables.bundle.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/responsive.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/sweetalert2.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/bootstrap-notify.js') }}" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
     <script src="{{ asset('js/products.js') }}" type="text/javascript"></script>
 @endpush

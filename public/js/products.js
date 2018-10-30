@@ -7,8 +7,7 @@ $(function(){
     });
 
     //limpar o ID quando clicar em novo produto
-    $("#modalProdutos").click(function(){
-        $("#msg-prod").fadeOut(300);
+    $("#modalProdutos").click(function(){    
         $("#imagem").hide();
         $("#id_save").val("");
         $('#produtosForm').trigger("reset");
@@ -26,7 +25,6 @@ $(function(){
             "data": function ( d, x) {
                 $('body').on('click', '.editar_botao', function(){
                     var id = $(this).attr('id');
-                    $("#msg-prod").fadeOut(300);
                     $("#imagem").fadeIn(300);
                     $('#produtosForm').trigger("reset");
                     $("#id_save").val(id);
@@ -38,7 +36,7 @@ $(function(){
                         $("#quantity").val(data.quantity);
                         $("#imagem").attr('src', data.url_image);
                         if(data.validade){
-                            $("#validade").val(data.validade.substring('0', '10'));
+                            $("#m_datepicker_3_modal").val(data.validade.substring('0', '10'));
                         }
                         $("#description").val(data.description);
                         if(data.status == 1){
@@ -110,22 +108,40 @@ $(function(){
             contentType: false,
             dataType: 'json',
             beforeSend: function() {
-                $('#salvar').button('loading');
+                $('#salvar').addClass('m-btn--custom m-loader m-loader--light m-loader--right').prop("disabled",true);
             },
             success: function(data){
-                $('#salvar').button('reset');
+                $('#salvar').removeClass('m-btn--custom m-loader m-loader--light m-loader--right').prop("disabled",false);
                 if(data.hasOwnProperty("success")){
-                    $("#msg-prod").find("ul").html('');
                     $('#modalProdutosTarget').modal('hide');
                     swal("Bom trabalho!", "Clique sobre o botão para fechar!", "success");
                     $('#produtosForm').trigger("reset");
                     $('#table_produtos').DataTable().ajax.reload();
                 }else{
-                    $("#msg-prod").find("ul").html('');
-                    $("#msg-prod").removeClass('alert-success').addClass('alert-danger');
                     $.each(data.errors, function( key, value ) {
-                        $("#msg-prod").fadeIn(300);
-                        $("#msg-prod").find("ul").append('<li>'+value+'</li>');
+                        var e = {
+                            message: value
+                        };
+                        var t = $.notify(e, {
+                            type: 'danger',
+                            allow_dismiss: true,
+                            spacing: 10,
+                            timer: 2000,
+                            placement: {
+                                from: 'top',
+                                align: 'right'
+                            },
+                            offset: {
+                                x: 30,
+                                y: 30
+                            },
+                            delay: 1000,
+                            z_index: 10000,
+                            animate: {
+                                enter: "animated " + "bounceIn",
+                                exit: "animated " + "hinge"
+                            }
+                        });
                     });
                 }
             }
@@ -143,23 +159,44 @@ $(function(){
             contentType: false,
             dataType: 'json',
             beforeSend: function() {
-                $('#salvar').button('loading');
+                $('#salvar').addClass('m-btn--custom m-loader m-loader--light m-loader--right').prop("disabled",true);
             },
             success: function(data){
-                $('#salvar').button('reset');
-                console.log(data);
+                $('#salvar').removeClass('m-btn--custom m-loader m-loader--light m-loader--right').prop("disabled",false);
                 if(data.hasOwnProperty("success")){
-                    $("#msg-prod").find("ul").html('');
                     $("#imagem").attr("src", $("#imagem").attr('src')+"?"+new Date().getTime());
                     $('#modalProdutosTarget').modal('hide');
                     swal("Bom trabalho!", "Clique sobre o botão para fechar!", "success");
                     $('#produtosForm').trigger("reset");
                     $('#table_produtos').DataTable().ajax.reload();
-                }else{
-                    $("#msg-prod").find("ul").html('');
+                }else{                
                     $.each(data.errors, function( key, value ) {
-                        $("#msg-prod").fadeIn(300);
-                        $("#msg-prod").find("ul").append('<li>'+value+'</li>');
+
+
+                        var e = {
+                            message: value
+                        };
+                        var t = $.notify(e, {
+                            type: 'Danger',
+                            allow_dismiss: true,
+                            spacing: 10,
+                            timer: 2000,
+                            placement: {
+                                from: 'top',
+                                align: 'right'
+                            },
+                            offset: {
+                                x: 30,
+                                y: 30
+                            },
+                            delay: 1000,
+                            z_index: 10000,
+                            animate: {
+                                enter: "animated " + "bounceIn",
+                                exit: "animated " + "hinge"
+                            }
+                        });
+                                        
                     });
                 }
             }
