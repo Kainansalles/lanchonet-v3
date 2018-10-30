@@ -7,10 +7,10 @@ $(function(){
     });
 
     //limpar o ID quando clicar em novo produto
-    $("#modalProdutos").click(function(){    
+    $("#modalProdutos").click(function(){
         $("#imagem").hide();
         $("#id_save").val("");
-        $('#produtosForm').trigger("reset");
+        $('#produtosForm').validate().resetForm();
     });
 
     // Método para criar a tabela com produtos
@@ -26,7 +26,7 @@ $(function(){
                 $('body').on('click', '.editar_botao', function(){
                     var id = $(this).attr('id');
                     $("#imagem").fadeIn(300);
-                    $('#produtosForm').trigger("reset");
+                    $('#produtosForm').validate().resetForm();
                     $("#id_save").val(id);
                     $.getJSON( "/api/products/"+id, function( data ) {
                         var data = data.data;
@@ -85,18 +85,38 @@ $(function(){
             "url": document.location.origin+ "/js/pt-br-translations-datatable.json"
         }
     });
-    // Métódo Ajax para inserir um novo produto
-    $('#produtosForm').on('submit',function(e){
-        e.preventDefault(e);
-        limpaCamposPreco();
-        $produtosForm = new FormData($(this)[0]);
 
-        if($("#id_save").val() == ""){
-            insertProduto();
-        }else{
-            updateProduto();
+    // Métódo Ajax para inserir um novo produto
+    $("#produtosForm").validate( {
+            rules: {
+                name: {
+                    required: !0, minlength: 1, maxlength: 50
+                },
+                 price_sale: {
+                    required: !0
+                },
+                // url_image: {
+                //     required: !0
+                // },
+                description: {
+                    maxlength: 100
+                }
+            }
+            , invalidHandler:function(e, r) {
+
+            }
+            , submitHandler:function(e) {
+                limpaCamposPreco();
+                $produtosForm = new FormData($('#produtosForm')[0]);
+                if($("#id_save").val() == ""){
+                    insertProduto();
+                }else{
+                    console.log(e);
+                    updateProduto();
+                }
+            }
         }
-    });
+    );
 
     // Método para Insert de produto
     function insertProduto(){
@@ -108,41 +128,20 @@ $(function(){
             contentType: false,
             dataType: 'json',
             beforeSend: function() {
-                $('#salvar').addClass('m-btn--custom m-loader m-loader--light m-loader--right').prop("disabled",true);
+                mApp.block("#modalProdutosTarget .modal-content", {
+                    overlayColor: "#000000",
+                    type: "loader",
+                    state: "primary",
+                    message: "Processando.."
+                });
             },
             success: function(data){
-                $('#salvar').removeClass('m-btn--custom m-loader m-loader--light m-loader--right').prop("disabled",false);
+                mApp.unblock("#modalProdutosTarget .modal-content");
                 if(data.hasOwnProperty("success")){
                     $('#modalProdutosTarget').modal('hide');
                     swal("Bom trabalho!", "Clique sobre o botão para fechar!", "success");
                     $('#produtosForm').trigger("reset");
                     $('#table_produtos').DataTable().ajax.reload();
-                }else{
-                    $.each(data.errors, function( key, value ) {
-                        var e = {
-                            message: value
-                        };
-                        var t = $.notify(e, {
-                            type: 'danger',
-                            allow_dismiss: true,
-                            spacing: 10,
-                            timer: 2000,
-                            placement: {
-                                from: 'top',
-                                align: 'right'
-                            },
-                            offset: {
-                                x: 30,
-                                y: 30
-                            },
-                            delay: 1000,
-                            z_index: 10000,
-                            animate: {
-                                enter: "animated " + "bounceIn",
-                                exit: "animated " + "hinge"
-                            }
-                        });
-                    });
                 }
             }
         });
@@ -159,43 +158,47 @@ $(function(){
             contentType: false,
             dataType: 'json',
             beforeSend: function() {
-                $('#salvar').addClass('m-btn--custom m-loader m-loader--light m-loader--right').prop("disabled",true);
+                mApp.block("#modalProdutosTarget .modal-content", {
+                    overlayColor: "#000000",
+                    type: "loader",
+                    state: "primary",
+                    message: "Processando.."
+                });
             },
             success: function(data){
-                $('#salvar').removeClass('m-btn--custom m-loader m-loader--light m-loader--right').prop("disabled",false);
+                mApp.unblock("#modalProdutosTarget .modal-content");
                 if(data.hasOwnProperty("success")){
                     $("#imagem").attr("src", $("#imagem").attr('src')+"?"+new Date().getTime());
                     $('#modalProdutosTarget').modal('hide');
                     swal("Bom trabalho!", "Clique sobre o botão para fechar!", "success");
                     $('#produtosForm').trigger("reset");
                     $('#table_produtos').DataTable().ajax.reload();
-                }else{                
+                }else{
                     $.each(data.errors, function( key, value ) {
 
-
-                        var e = {
-                            message: value
-                        };
-                        var t = $.notify(e, {
-                            type: 'Danger',
-                            allow_dismiss: true,
-                            spacing: 10,
-                            timer: 2000,
-                            placement: {
-                                from: 'top',
-                                align: 'right'
-                            },
-                            offset: {
-                                x: 30,
-                                y: 30
-                            },
-                            delay: 1000,
-                            z_index: 10000,
-                            animate: {
-                                enter: "animated " + "bounceIn",
-                                exit: "animated " + "hinge"
-                            }
-                        });
+                        // var e = {
+                        //     message: value
+                        // };
+                        // var t = $.notify(e, {
+                        //     type: 'Danger',
+                        //     allow_dismiss: true,
+                        //     spacing: 10,
+                        //     timer: 2000,
+                        //     placement: {
+                        //         from: 'top',
+                        //         align: 'right'
+                        //     },
+                        //     offset: {
+                        //         x: 30,
+                        //         y: 30
+                        //     },
+                        //     delay: 1000,
+                        //     z_index: 10000,
+                        //     animate: {
+                        //         enter: "animated " + "bounceIn",
+                        //         exit: "animated " + "hinge"
+                        //     }
+                        // });
                                         
                     });
                 }

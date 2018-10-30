@@ -62,6 +62,7 @@
                         </div>
 
                         <div class="form-group m-form__group row">
+
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <label class="col-lg-6 col-form-label">
                                     Preço de custo:
@@ -89,6 +90,7 @@
                                     </span>
                                 </div>
                             </div>
+
                         </div>
 
                         <div class="form-group m-form__group row">
@@ -105,20 +107,13 @@
                             </div>
                         </div>
 
-
-                        <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                                <label for="validade">Validade</label>
-                                <input type="date" name="validade" class="form-control"
-                                       id="validade" placeholder="Validade do produto"/>
-                            </div>
-
                         <div class="form-group m-form__group row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <label class="col-lg-6 col-form-label">
                                     Validade:
                                 </label>
                                 <div class="input-group date" >
-                                    <input type="text" class="form-control m-input" name="validade" readonly id="m_datepicker_3_modal"/>
+                                    <input type="date" class="form-control m-input" name="validade" id="validade"/>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="la la-calendar"></i>
@@ -184,12 +179,13 @@
 @endsection
 
 @push('lanchonet-js')
+    <script src="{{ asset('js/validation-messages-pt-br.js') }}"></script>
     {{--<script src="{{ asset('js/bootstrap-confirmation.min.js') }}"></script>--}}
     <script src="{{ asset('js/datatables.bundle.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/responsive.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('js/responsive.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('js/sweetalert2.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/bootstrap-notify.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('js/bootstrap-datepicker.js') }}" type="text/javascript"></script>--}}
+{{--    <script src="{{ asset('js/bootstrap-notify.js') }}" type="text/javascript"></script>--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
     <script src="{{ asset('js/products.js') }}" type="text/javascript"></script>
 @endpush
