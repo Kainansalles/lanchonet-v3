@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('url_image');
-            $table->integer('quantity');
+            $table->integer('quantity')->default(0);
             $table->decimal('price_cost', 8, 2)->nullable();
             $table->decimal('price_sale', 8, 2);
             $table->dateTime('validade')->nullable();

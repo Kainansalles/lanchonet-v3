@@ -10,7 +10,8 @@ $(function(){
     $("#modalProdutos").click(function(){
         $("#imagem").hide();
         $("#id_save").val("");
-        $('#produtosForm').validate().resetForm();
+        $('#produtosForm').trigger("reset");
+        //$('#produtosForm').validate().resetForm();
     });
 
     // Método para criar a tabela com produtos
@@ -47,6 +48,23 @@ $(function(){
                     });
                     $('#modalProdutosTarget').modal('show');
                 });
+
+                $('body').on('click', '.excluir_botao', function(){
+                    var id = $(this).attr('id');
+                    swal({
+                        title: "Você tem certeza?",
+                        text: "Você não vai poder reverter isso!",
+                        type: "warning",
+                        showCancelButton: !0,
+                        confirmButtonText: "Sim, deletar!",
+                        cancelButtonText: "Não, cancelar!"
+                    }).then(function(e) {
+                        if(e.value){
+                            deletarProduto(id);
+                            swal("Bom trabalho!", "Produto deletado com sucesso!", "success");
+                        }
+                    });
+                });
             },
         },
         "columns": [
@@ -67,19 +85,6 @@ $(function(){
             { "width": "5%", "targets": 5 },
             { "width": "10%", "targets": 6 }
         ],
-        "drawCallback": function( settings ) {
-            // $('[data-toggle="confirm_delete_produto"]').confirmation({
-            //     title: 'Você tem certeza?',
-            //     btnOkLabel      : 'Sim',
-            //     btnCancelLabel  : 'Não',
-            //     onConfirm: function() {
-            //         var id = $(this).attr('id');
-            //         if(id != ""){
-            //             deletarProduto(id);
-            //         }
-            //     },
-            // });
-        },
         "order": [ 1, 'asc' ],
         "language": {
             "url": document.location.origin+ "/js/pt-br-translations-datatable.json"
@@ -87,7 +92,18 @@ $(function(){
     });
 
     // Métódo Ajax para inserir um novo produto
-    $("#produtosForm").validate( {
+    $('#produtosForm').on('submit',function(e){
+        e.preventDefault(e);
+        limpaCamposPreco();
+        $produtosForm = new FormData($(this)[0]);
+            if($("#id_save").val() == ""){
+            insertProduto();
+        }else{
+            updateProduto();
+        }
+    });
+
+    /*$("#produtosForm").validate( {
             rules: {
                 name: {
                     required: !0, minlength: 1, maxlength: 50
@@ -105,18 +121,17 @@ $(function(){
             , invalidHandler:function(e, r) {
 
             }
-            , submitHandler:function(e) {
+            , submitHandler:function(form) {
                 limpaCamposPreco();
                 $produtosForm = new FormData($('#produtosForm')[0]);
                 if($("#id_save").val() == ""){
                     insertProduto();
                 }else{
-                    console.log(e);
                     updateProduto();
                 }
             }
         }
-    );
+    );*/
 
     // Método para Insert de produto
     function insertProduto(){
@@ -142,6 +157,34 @@ $(function(){
                     swal("Bom trabalho!", "Clique sobre o botão para fechar!", "success");
                     $('#produtosForm').trigger("reset");
                     $('#table_produtos').DataTable().ajax.reload();
+                }else{
+                    $.each(data.errors, function( key, value ) {
+
+                        var e = {
+                            message: value
+                        };
+                        var t = $.notify(e, {
+                            type: 'danger',
+                            allow_dismiss: true,
+                            spacing: 10,
+                            timer: 2000,
+                            placement: {
+                                from: 'top',
+                                align: 'right'
+                            },
+                            offset: {
+                                x: 30,
+                                y: 30
+                            },
+                            delay: 1000,
+                            z_index: 10000,
+                            animate: {
+                                enter: "animated " + "bounceIn",
+                                exit: "animated " + "flipOutX"
+                            }
+                        });
+
+                    });
                 }
             }
         });
@@ -176,30 +219,30 @@ $(function(){
                 }else{
                     $.each(data.errors, function( key, value ) {
 
-                        // var e = {
-                        //     message: value
-                        // };
-                        // var t = $.notify(e, {
-                        //     type: 'Danger',
-                        //     allow_dismiss: true,
-                        //     spacing: 10,
-                        //     timer: 2000,
-                        //     placement: {
-                        //         from: 'top',
-                        //         align: 'right'
-                        //     },
-                        //     offset: {
-                        //         x: 30,
-                        //         y: 30
-                        //     },
-                        //     delay: 1000,
-                        //     z_index: 10000,
-                        //     animate: {
-                        //         enter: "animated " + "bounceIn",
-                        //         exit: "animated " + "hinge"
-                        //     }
-                        // });
-                                        
+                        var e = {
+                            message: value
+                        };
+                        var t = $.notify(e, {
+                            type: 'danger',
+                            allow_dismiss: true,
+                            spacing: 10,
+                            timer: 2000,
+                            placement: {
+                                from: 'top',
+                                align: 'right'
+                            },
+                            offset: {
+                                x: 30,
+                                y: 30
+                            },
+                            delay: 1000,
+                            z_index: 10000,
+                            animate: {
+                                enter: "animated " + "bounceIn",
+                                exit: "animated " + "flipOutX"
+                            }
+                        });
+
                     });
                 }
             }
@@ -234,6 +277,10 @@ $(function(){
     }
 
     // Mascaras formulario produto
-    $('#price_cost').mask('000,00', {reverse: true});
-    $('#price_sale').mask('000,00', {reverse: true});
+    $("#price_cost").inputmask("R$ 999.999.999,99", {
+        numericInput: !0
+    });
+    $("#price_sale").inputmask("R$ 999.999.999,99", {
+        numericInput: !0
+    });
 });
