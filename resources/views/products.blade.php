@@ -182,7 +182,7 @@
     <script src="{{ asset('js/validation-messages-pt-br.js') }}"></script>
     <script src="{{ asset('js/datatables.bundle.js') }}" type="text/javascript"></script>
 {{--    <script src="{{ asset('js/responsive.js') }}" type="text/javascript"></script>--}}
-    <script src="{{ asset('js/sweetalert2.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('js/sweetalert2.js') }}" type="text/javascript"></script>--}}
 {{--    <script src="{{ asset('js/bootstrap-datepicker.js') }}" type="text/javascript"></script>--}}
 {{--    <script src="{{ asset('js/bootstrap-notify.js') }}" type="text/javascript"></script> --}}
     {{--<script src="{{ asset('js/bootstrap-confirmation.min.js') }}"></script>--}}

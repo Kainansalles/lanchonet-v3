@@ -10,7 +10,6 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "fzaninotto/faker": "^1.8",
-        "jeroennoten/laravel-adminlte": "^1.23",
         "league/flysystem-aws-s3-v3": "^1.0",
         "tymon/jwt-auth": "0.5.*",
         "vlucas/valitron": "^1.4",
