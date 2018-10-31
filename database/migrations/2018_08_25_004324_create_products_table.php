@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price_sale', 8, 2);
             $table->dateTime('validade')->nullable();
             $table->boolean('status')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

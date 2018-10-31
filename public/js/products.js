@@ -24,47 +24,7 @@ $(function(){
             "serverSide": true,
             "url": "produtos/todosprodutosadmin",
             "data": function ( d, x) {
-                $('body').on('click', '.editar_botao', function(){
-                    var id = $(this).attr('id');
-                    $("#imagem").fadeIn(300);
-                    $('#produtosForm').validate().resetForm();
-                    $("#id_save").val(id);
-                    $.getJSON( "/api/products/"+id, function( data ) {
-                        var data = data.data;
-                        $("#name").val(data.name);
-                        $("#price_cost").val(data.price_cost);
-                        $("#price_sale").val(data.price_sale);
-                        $("#quantity").val(data.quantity);
-                        $("#imagem").attr('src', data.url_image);
-                        if(data.validade){
-                            $("#m_datepicker_3_modal").val(data.validade.substring('0', '10'));
-                        }
-                        $("#description").val(data.description);
-                        if(data.status == 1){
-                            $("#ativo").prop("checked", true);
-                        }else{
-                            $("#inativo").prop("checked", true);
-                        }
-                    });
-                    $('#modalProdutosTarget').modal('show');
-                });
-
-                $('body').on('click', '.excluir_botao', function(){
-                    var id = $(this).attr('id');
-                    swal({
-                        title: "Você tem certeza?",
-                        text: "Você não vai poder reverter isso!",
-                        type: "warning",
-                        showCancelButton: !0,
-                        confirmButtonText: "Sim, deletar!",
-                        cancelButtonText: "Não, cancelar!"
-                    }).then(function(e) {
-                        if(e.value){
-                            deletarProduto(id);
-                            swal("Bom trabalho!", "Produto deletado com sucesso!", "success");
-                        }
-                    });
-                });
+                actionsButtons();
             },
         },
         "columns": [
@@ -90,6 +50,51 @@ $(function(){
             "url": document.location.origin+ "/js/pt-br-translations-datatable.json"
         }
     });
+
+    //Método para dar ações aos botões do datatable
+    function actionsButtons(){
+        $('body').on('click', '.editar_botao', function(){
+            var id = $(this).attr('id');
+            $("#imagem").fadeIn(300);
+            $('#produtosForm').validate().resetForm();
+            $("#id_save").val(id);
+            $.getJSON( "/api/products/"+id, function( data ) {
+                var data = data.data;
+                $("#name").val(data.name);
+                $("#price_cost").val(data.price_cost);
+                $("#price_sale").val(data.price_sale);
+                $("#quantity").val(data.quantity);
+                $("#imagem").attr('src', data.url_image);
+                if(data.validade){
+                    $("#m_datepicker_3_modal").val(data.validade.substring('0', '10'));
+                }
+                $("#description").val(data.description);
+                if(data.status == 1){
+                    $("#ativo").prop("checked", true);
+                }else{
+                    $("#inativo").prop("checked", true);
+                }
+            });
+            $('#modalProdutosTarget').modal('show');
+        });
+
+        $('body').on('click', '.excluir_botao', function(){
+            var id = $(this).attr('id');
+            swal({
+                title: "Você tem certeza?",
+                text: "Você não vai poder reverter isso!",
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonText: "Sim, deletar!",
+                cancelButtonText: "Não, cancelar!"
+            }).then(function(e) {
+                if(e.value){
+                    deletarProduto(id);
+                    swal("Bom trabalho!", "Produto deletado com sucesso!", "success");
+                }
+            });
+        });
+    }
 
     // Métódo Ajax para inserir um novo produto
     $('#produtosForm').on('submit',function(e){
@@ -159,31 +164,7 @@ $(function(){
                     $('#table_produtos').DataTable().ajax.reload();
                 }else{
                     $.each(data.errors, function( key, value ) {
-
-                        var e = {
-                            message: value
-                        };
-                        var t = $.notify(e, {
-                            type: 'danger',
-                            allow_dismiss: true,
-                            spacing: 10,
-                            timer: 2000,
-                            placement: {
-                                from: 'top',
-                                align: 'right'
-                            },
-                            offset: {
-                                x: 30,
-                                y: 30
-                            },
-                            delay: 1000,
-                            z_index: 10000,
-                            animate: {
-                                enter: "animated " + "bounceIn",
-                                exit: "animated " + "flipOutX"
-                            }
-                        });
-
+                        messageError(value)
                     });
                 }
             }
@@ -218,31 +199,7 @@ $(function(){
                     $('#table_produtos').DataTable().ajax.reload();
                 }else{
                     $.each(data.errors, function( key, value ) {
-
-                        var e = {
-                            message: value
-                        };
-                        var t = $.notify(e, {
-                            type: 'danger',
-                            allow_dismiss: true,
-                            spacing: 10,
-                            timer: 2000,
-                            placement: {
-                                from: 'top',
-                                align: 'right'
-                            },
-                            offset: {
-                                x: 30,
-                                y: 30
-                            },
-                            delay: 1000,
-                            z_index: 10000,
-                            animate: {
-                                enter: "animated " + "bounceIn",
-                                exit: "animated " + "flipOutX"
-                            }
-                        });
-
+                        messageError(value);
                     });
                 }
             }
@@ -265,6 +222,33 @@ $(function(){
         });
     }
 
+    // Método para mostrar erros
+    function messageError(value){
+        var e = {
+            message: value
+        };
+        var t = $.notify(e, {
+            type: 'danger',
+            allow_dismiss: true,
+            spacing: 10,
+            timer: 2000,
+            placement: {
+                from: 'top',
+                align: 'right'
+            },
+            offset: {
+                x: 30,
+                y: 30
+            },
+            delay: 1000,
+            z_index: 10000,
+            animate: {
+                enter: "animated " + "bounceIn",
+                exit: "animated " + "flipOutX"
+            }
+        });
+    }
+
     // Método responsavel por limpar os campos de preços
     function limpaCamposPreco(){
         var price_cost = $("#price_cost").val();
@@ -277,10 +261,6 @@ $(function(){
     }
 
     // Mascaras formulario produto
-    $("#price_cost").inputmask("R$ 999.999.999,99", {
-        numericInput: !0
-    });
-    $("#price_sale").inputmask("R$ 999.999.999,99", {
-        numericInput: !0
-    });
+    $('#price_cost').mask('000,00', {reverse: true});
+    $('#price_sale').mask('000,00', {reverse: true});
 });
