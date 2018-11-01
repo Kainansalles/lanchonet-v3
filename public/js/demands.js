@@ -1,6 +1,6 @@
 $(function(){
     //setInterval(function() {
-    //    $('#table_demands').mDatatable().ajax.reload();
+    //    $('#table_demands').DataTable().ajax.reload();
     //}, 1000 );
 
     // Método para criar a tabela com produtos
@@ -18,7 +18,7 @@ $(function(){
         renderDemand();
         optionsDemand();
     })
-    .mDatatable({
+    .DataTable({
         orderFixed: [ 3, 'desc' ],
         paging : true,
         responsive: true,
@@ -39,17 +39,17 @@ $(function(){
         //     { "width": "5%", "targets": 3 },
         //     { "width": "10%", "targets": 4 }
         // ],
-        dom: 'Bflrtip',
+        dom: 'flrtip',
         buttons: [
             {
                 text: 'Entregas atuais',
-                className: 'btn btn-primary botoes-filtro',
+                className: 'btn m-btn--pill btn-primary m-btn--wide botoes-filtro',
                 action: function ( e, dt, node, config ) {
                     $('.botoes-filtro').removeClass('active botoes-filtro-efeito');
                     $("#table_demands").addClass('fl-datatable');
                     node.addClass('active botoes-filtro-efeito');
                     $("#status_demand_description").val('');
-                    $('#table_demands').mDatatable().ajax.url( '/admin/pedidos/all' ).load();
+                    $('#table_demands').DataTable().ajax.url( '/admin/pedidos/all' ).load();
                 },
                 init: function (e, settings, json) {
                     settings.addClass('active botoes-filtro-efeito');
@@ -57,28 +57,32 @@ $(function(){
             },
             {
                 text: 'Cancelados',
-                className: 'btn btn-danger botoes-filtro',
+                className: 'btn m-btn--pill btn-danger botoes-filtro',
                 action: function ( e, dt, node, config ) {
                     $('.botoes-filtro').removeClass('active botoes-filtro-efeito');
                     $("#table_demands").removeClass('fl-datatable');
                     node.addClass('active botoes-filtro-efeito');
-                    $('#table_demands').mDatatable().ajax.url( '/admin/pedidos/allcancel' ).load();
+                    $('#table_demands').DataTable().ajax.url( '/admin/pedidos/allcancel' ).load();
                 }
             },
             {
                 text: 'Finalizados',
-                className: 'btn btn-success botoes-filtro',
+                className: 'bbtn m-btn--pill btn-success m-btn--wide botoes-filtro',
                 action: function ( e, dt, node, config ) {
                     $('.botoes-filtro').removeClass('active botoes-filtro-efeito');
                     $("#table_demands").removeClass('fl-datatable');
                     node.addClass('active botoes-filtro-efeito');
-                    $('#table_demands').mDatatable().ajax.url( '/admin/pedidos/allfinalized' ).load();
+                    $('#table_demands').DataTable().ajax.url( '/admin/pedidos/allfinalized' ).load();
                 }
             }
         ],
         "language": {
             "url": document.location.origin+ "/js/pt-br-translations-datatable.json"
         }
+    });
+
+    $("#m_select2_3, #m_select2_3_validate").select2( {
+        placeholder: "Select a state"
     });
 
     // Método para renderizar demanda
@@ -154,7 +158,7 @@ $(function(){
             dataType: 'json',
             success: function(data){
                 if(data.hasOwnProperty("success")){
-                    $('#table_demands').mDatatable().ajax.reload();
+                    $('#table_demands').DataTable().ajax.reload();
                 }
             }
         });

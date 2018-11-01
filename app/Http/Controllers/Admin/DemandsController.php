@@ -62,7 +62,7 @@ class DemandsController extends Controller
         return  DataTables::collection($model)
             ->addColumn('action', function ($model) {
                 return "
-                <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='glyphicon glyphicon-search'></span></button>";
+                <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>";
             })
             ->toJson();
     }
@@ -77,7 +77,7 @@ class DemandsController extends Controller
         return  DataTables::collection($model)
             ->addColumn('action', function ($model) {
                 return "
-                <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='glyphicon glyphicon-search'></span></button>";
+                <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>";
             })
             ->toJson();
     }
