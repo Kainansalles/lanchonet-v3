@@ -1,6 +1,6 @@
 $(function(){
     //setInterval(function() {
-    //    $('#table_demands').DataTable().ajax.reload();
+    //    $('#table_demands').mDatatable().ajax.reload();
     //}, 1000 );
 
     // Método para criar a tabela com produtos
@@ -18,7 +18,7 @@ $(function(){
         renderDemand();
         optionsDemand();
     })
-    .DataTable({
+    .mDatatable({
         orderFixed: [ 3, 'desc' ],
         paging : true,
         responsive: true,
@@ -49,7 +49,7 @@ $(function(){
                     $("#table_demands").addClass('fl-datatable');
                     node.addClass('active botoes-filtro-efeito');
                     $("#status_demand_description").val('');
-                    $('#table_demands').DataTable().ajax.url( '/admin/pedidos/all' ).load();
+                    $('#table_demands').mDatatable().ajax.url( '/admin/pedidos/all' ).load();
                 },
                 init: function (e, settings, json) {
                     settings.addClass('active botoes-filtro-efeito');
@@ -62,7 +62,7 @@ $(function(){
                     $('.botoes-filtro').removeClass('active botoes-filtro-efeito');
                     $("#table_demands").removeClass('fl-datatable');
                     node.addClass('active botoes-filtro-efeito');
-                    $('#table_demands').DataTable().ajax.url( '/admin/pedidos/allcancel' ).load();
+                    $('#table_demands').mDatatable().ajax.url( '/admin/pedidos/allcancel' ).load();
                 }
             },
             {
@@ -72,7 +72,7 @@ $(function(){
                     $('.botoes-filtro').removeClass('active botoes-filtro-efeito');
                     $("#table_demands").removeClass('fl-datatable');
                     node.addClass('active botoes-filtro-efeito');
-                    $('#table_demands').DataTable().ajax.url( '/admin/pedidos/allfinalized' ).load();
+                    $('#table_demands').mDatatable().ajax.url( '/admin/pedidos/allfinalized' ).load();
                 }
             }
         ],
@@ -154,7 +154,7 @@ $(function(){
             dataType: 'json',
             success: function(data){
                 if(data.hasOwnProperty("success")){
-                    $('#table_demands').DataTable().ajax.reload();
+                    $('#table_demands').mDatatable().ajax.reload();
                 }
             }
         });
