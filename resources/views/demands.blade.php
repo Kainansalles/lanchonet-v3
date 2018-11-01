@@ -7,7 +7,7 @@
 
 @section('content')
 
-<div class="m-portlet m-portlet--mobile" style="width: 100%;">
+<div class="m-portlet m-portlet--mobile" id="content-table-demands" style="width: 100%;">
     <div class="m-portlet__head">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">

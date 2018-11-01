@@ -1,28 +1,10 @@
- {{--var PerProduct = 0;--}}
- {{--var total = 0;--}}
-
- {{--$.each(data.demand_x_product, function(i, val){--}}
-     {{--PerProduct += (parseFloat(val.price_registred) * val.quantity);--}}
-     {{--total += parseFloat(PerProduct);--}}
-
-     {{--$("#modal_demands").find("tbody").append('<tr>' +--}}
-             {{--'<td>' + val.product.name + '</td>' +--}}
-             {{--'<td> R$ ' + val.price_registred.replace('.', ',') + '</td>' +--}}
-             {{--'<td>' + val.quantity + '</td>' +--}}
-             {{--'<td> R$ ' + PerProduct.toFixed(2).replace('.', ',') + '</td>' +--}}
-             {{--'</tr>');--}}
- {{--});--}}
-
-{{--$("h4#value_total").html("<strong>Valor total:</strong> R$ " + total.toFixed(2).replace('.', ','));--}}
-
-
 <div class="modal-content">
     <input type="hidden" id="productID" value="{{ $demand->id }}">
     <input type="hidden" id="status_demand_description" value="{{$demand->status_demand->description}}">
     <!-- Modal Header -->
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-            Visualização do pedido - #{{ $demand->id }}
+            Visualização do pedido - <strong>#{{ $demand->id }}</strong>
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"> &times;</span>
@@ -51,26 +33,28 @@
             </tr>
             </thead>
             <tbody>
+            @php $perProduct = 0; $total = 0; @endphp
             @foreach($demand->demand_x_product as $demand)
-                <?php $PerProduct = round(($demand->price_registred * $demand->quantity), 2); ?>
+                @php $perProduct = round(($demand->price_registred * $demand->quantity), 2);
+                     $total = $total + $perProduct;
+                @endphp
                 <tr>
                     <td>{{$demand->product->name}}</td>
-                    <td>R$ <?= str_replace('.', ',', $demand->price_registred);?></td>
+                    <td>R$ {{str_replace('.', ',', $demand->price_registred) }}</td>
                     <td>{{$demand->quantity}}</td>
-                    <td>R$ {{$demand->quantity}}</td>
+                    <td>R$ {{str_replace('.', ',',$perProduct)}}</td>
                 </tr>
-
             @endforeach
             </tbody>
         </table>
         <!-- Modal Footer -->
         <div class="modal-footer">
-            <div class="col-md-6 buttons-options" style="text-align: left;">
-                <button type="button" class="btn btn-success confirm_demand_product">Confirmar</button>
-                <button type="button" class="btn btn-danger cancel_demand_product">Cancelar</button>
+            <div class="col-md-7 buttons-options" style="text-align: left;">
+                <button type="button" class="btn m-btn--pill m-btn--air btn-success btn-lg confirm_demand_product">Confirmar</button>
+                <button type="button" class="btn m-btn--pill m-btn--air btn-danger btn-lg cancel_demand_product">Cancelar</button>
             </div>
-            <div class="col-md-6 value-total">
-                <h4 id="value_total"></h4>
+            <div class="col-md-5 value-total">
+            <h4><strong>Valor total:</strong> R$ {{str_replace('.', ',', round($total, 2))}}</h4>
             </div>
         </div>
     </div>

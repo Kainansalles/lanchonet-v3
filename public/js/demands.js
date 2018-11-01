@@ -1,23 +1,29 @@
 $(function(){
-    // setInterval(function() {
-    //     $('#table_demands').DataTable().ajax.reload();
-    // }, 10000 );
+    //setInterval(function() {
+    //    $('#table_demands').DataTable().ajax.reload();
+    //}, 1000 );
 
     // Método para criar a tabela com produtos
-    $('#table_demands').DataTable({
+    $('#table_demands')
+    .on( 'preXhr.dt', function () {
+        mApp.block("#content-table-products", {
+            overlayColor: "#000000",
+            type: "loader",
+            state: "primary",
+            message: "Processando.."
+        });
+    })
+    .on( 'xhr.dt', function () {
+        mApp.unblock("#content-table-products");
+        renderDemand();
+        optionsDemand();
+    })
+    .DataTable({
         orderFixed: [ 3, 'desc' ],
         paging : true,
         responsive: true,
         stateSave: true,
-        "ajax": {
-            "processing": true,
-            "serverSide": true,
-            "url": "/admin/pedidos/all",
-            "data": function ( d, x) {
-                renderDemand();
-                optionsDemand();
-            },
-        },
+        "ajax": { "url": "/admin/pedidos/all" },
         "columns": [
             { "data": "id", "title": "#" },
             { "data": "client.name", "title": "Nome" },
@@ -33,17 +39,6 @@ $(function(){
         //     { "width": "5%", "targets": 3 },
         //     { "width": "10%", "targets": 4 }
         // ],
-        "drawCallback": function( settings ) {
-            // $('[data-toggle="confirm_cancel_demand"]').confirmation({
-            //     title: 'Você tem certeza?',
-            //     btnOkLabel      : 'Sim',
-            //     btnCancelLabel  : 'Não',
-            //     onConfirm: function(e) {
-            //         sendRequest('/admin/pedidos/cancel/', $(this).attr('id'));
-            //     },
-            // });
-
-        },
         dom: 'Bflrtip',
         buttons: [
             {
@@ -90,51 +85,10 @@ $(function(){
     function renderDemand(){
         $('body').off('click').on('click', '.view_demand', function(){
             var id = $(this).attr('id');
-            $.getJSON( "/admin/pedidos/"+id, function( data ) {
-                // var data = data.data;
-                // var PerProduct = 0;
-                // var total = 0;
-                // $("#productID").val(data.id);
-                // $("#status_demand_description").val(data.status_demand.description);
-                // $('.buttons-options').show();
-                // $('.value-total').removeClass('col-md-12').addClass('col-md-6');
-                //
-                // if($("#status_demand_description").val() == "Cancelado" ||
-                //     $("#status_demand_description").val() == "Finalizado"){
-                //     $('.buttons-options').hide();
-                //     $('.value-total').removeClass('col-md-6').addClass('col-md-12');
-                // }
-                //
-                // $("h2#name").html(data.client.name);
-                // $("h4#status").html("<strong>Status:</strong> " + data.status_demand.description);
-                // $("h4#retirada").html("<strong>Retirada:</strong> " + data.hour_recall);
-                // $("#modal_demands").find("tbody").html('');
-                //
-                // $.each(data.demand_x_product, function(i, val){
-                //     PerProduct += (parseFloat(val.price_registred) * val.quantity);
-                //     total += parseFloat(PerProduct);
-                //
-                //     $("#modal_demands").find("tbody").append('<tr>' +
-                //         '<td>' + val.product.name + '</td>' +
-                //         '<td> R$ ' + val.price_registred.replace('.', ',') + '</td>' +
-                //         '<td>' + val.quantity + '</td>' +
-                //         '<td> R$ ' + PerProduct.toFixed(2).replace('.', ',') + '</td>' +
-                //         '</tr>');
-                // });
-
-                //$("h4#value_total").html("<strong>Valor total:</strong> R$ " + total.toFixed(2).replace('.', ','));
-                console.log(data);
+            $('#content-modal').html('');
+            $.getJSON( "/admin/pedidos/" + id, function( data ) {
                 $('#content-modal').html(data.view);
-                // $('.buttons-options').show();
-                // $('.value-total').removeClass('col-md-12').addClass('col-md-6');
-                //
-                // if($("#status_demand_description").val() == "Cancelado" ||
-                //     $("#status_demand_description").val() == "Finalizado"){
-                //     $('.buttons-options').hide();
-                //     $('.value-total').removeClass('col-md-6').addClass('col-md-12');
-                // }
             });
-
             $('#modalDemandTarget').modal('show');
         });
     }
@@ -143,28 +97,38 @@ $(function(){
     function optionsDemand(){
         if($("#status_demand_description").val() == "Cancelado" ||
             $("#status_demand_description").val() == "Finalizado"){
-
-            $('.buttons-options').hide();
-            $('.value-total').removeClass('col-md-6').addClass('col-md-12');
-
         }else{
-            $('.buttons-options').show();
-            $('.value-total').removeClass('col-md-12').addClass('col-md-6');
             $('body').on('click', '.confirm_demand', function(){
                 var id = $(this).attr('id');
                 swal({
-                    buttons: ["Cancelar", "Confirmar"],
                     title: "Você tem certeza?",
                     text: "Uma vez entregue, você não poderá recuperar este pedido!",
-                    icon: "warning",
-                    dangerMode: true,
-                }).then((willDelete) => {
-                    if (willDelete) {
+                    type: "warning",
+                    showCancelButton: !0,
+                    confirmButtonText: "Sim, deletar!",
+                    cancelButtonText: "Não, cancelar!"
+                }).then(function(e) {
+                    if(e.value){
                         sendRequest('/admin/pedidos/confirm/', id);
-                        swal("Pedido foi entregue com sucesso!", {
-                            title: "Bom trabalho!",
-                            icon: "success",
-                        });
+                        swal("Bom trabalho!", "Pedido foi entregue com sucesso!", "success");
+                    }
+                });
+
+            });
+
+            $('body').on('click', '.cancel_demand', function(){
+                var id = $(this).attr('id');
+                swal({
+                    title: "Você tem certeza?",
+                    text: "Uma vez <strong>cancelado</strong>, você não poderá recuperar este pedido!",
+                    type: "error",
+                    showCancelButton: !0,
+                    confirmButtonText: "Sim!",
+                    cancelButtonText: "Não!"
+                }).then(function(e) {
+                    if(e.value){
+                        sendRequest('/admin/pedidos/cancel/', id);
+                        swal("Bom trabalho!", "Pedido foi cancelado!", "success");
                     }
                 });
 

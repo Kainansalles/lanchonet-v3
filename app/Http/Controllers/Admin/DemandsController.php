@@ -47,7 +47,7 @@ class DemandsController extends Controller
                 return "
                 <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>
                 <button class='btn btn-success confirm_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-check'></span></button>
-                <button data-toggle='confirm_cancel_demand' id='" . $model->id ."' class='btn btn-danger'><span class='fa fa-trash'></span></button>";
+                <button class='btn btn-danger cancel_demand' id='" . $model->id ."'><span class='fa fa-trash'></span></button>";
             })
             ->toJson();
     }

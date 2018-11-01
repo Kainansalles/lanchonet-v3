@@ -15,18 +15,24 @@ $(function(){
     });
 
     // Método para criar a tabela com produtos
-    $('#table_produtos').DataTable({
+    $('#table_produtos')
+    .on( 'preXhr.dt', function () {
+        mApp.block("#content-table-products", {
+            overlayColor: "#000000",
+            type: "loader",
+            state: "primary",
+            message: "Processando.."
+        });
+    })
+    .on( 'xhr.dt', function () {
+        mApp.unblock("#content-table-products");
+        actionsButtons();
+    })
+    .DataTable({
         paging : true,
         responsive: true,
         stateSave: true,
-        "ajax": {
-            "processing": true,
-            "serverSide": true,
-            "url": "produtos/todosprodutosadmin",
-            "data": function ( d, x) {
-                actionsButtons();
-            },
-        },
+        "ajax": { "url": "produtos/todosprodutosadmin" },
         "columns": [
             { "data": "id", "title": "#" },
             { "data": "name", "title": "Nome" },

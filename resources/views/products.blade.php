@@ -6,7 +6,7 @@
 @endpush
 
 @section('content')
-    <div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet m-portlet--mobile" id="content-table-products">
         <div class="m-portlet__head">
                 <div class="m-portlet__head-caption">
                     <div class="m-portlet__head-title">

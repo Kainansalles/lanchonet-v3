@@ -13,7 +13,7 @@ class DemandsSeeder extends Seeder
      */
     public function run()
     {
-        foreach(range(1, 30) as $i){
+        foreach(range(1, 5) as $i){
             Demand::create([
                 'client_id' => rand(1,25),
                 'store_id' => 1,
@@ -25,7 +25,7 @@ class DemandsSeeder extends Seeder
         foreach(range(1, 20) as $i){
             DemandxProduct::create([
                 "product_id" => rand(1,25),
-                "demand_id" => rand(1,10),
+                "demand_id" => rand(1,5),
                 "quantity" => rand(1,10),
                 "price_registred" => rand(1,25) . "." . rand(1,25)
             ]);
