@@ -17,10 +17,10 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <h4><strong>Status: {{$demand->status_demand->description}}</strong> </h4>
+                <h5><strong>Status: {{$demand->status_demand->description}}</strong> </h5>
             </div>
             <div class="col-md-6">
-                <h4><strong>Retirada:</strong> {{$demand->hour_recall}}</h4>
+                <h5><strong>Retirada:</strong> {{$demand->hour_recall}}</h5>
             </div>
         </div>
         <table class="table m-table m-table--head-bg-brand">
@@ -49,12 +49,14 @@
         </table>
         <!-- Modal Footer -->
         <div class="modal-footer">
-            <div class="col-md-7 buttons-options" style="text-align: left;">
-                <button type="button" class="btn m-btn--pill m-btn--air btn-success btn-lg confirm_demand_product">Confirmar</button>
-                <button type="button" class="btn m-btn--pill m-btn--air btn-danger btn-lg cancel_demand_product">Cancelar</button>
-            </div>
-            <div class="col-md-5 value-total">
-            <h4><strong>Valor total:</strong> R$ {{str_replace('.', ',', round($total, 2))}}</h4>
+            @if ($allows_low)
+                <div class="col-md-7 buttons-options" style="text-align: left;">
+                    <button type="button" class="btn m-btn--pill m-btn--air btn-success btn-lg confirm_demand_product">Confirmar</button>
+                    <button type="button" class="btn m-btn--pill m-btn--air btn-danger btn-lg cancel_demand_product">Cancelar</button>
+                </div>
+            @endif
+            <div class="col-md-5">
+                <h4><strong>Valor total:</strong> R$ {{str_replace('.', ',', round($total, 2))}}</h4>
             </div>
         </div>
     </div>

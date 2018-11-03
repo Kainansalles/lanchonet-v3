@@ -13,11 +13,13 @@ class StatusDemandsSeeder extends Seeder
     {
         DB::table('status_demands')->insert([
             'initials' => 'P',
-            'description' => 'Pd. pagamento'
+            'description' => 'Pd. pagamento',
+            'allows_low' => 1
         ]);
         DB::table('status_demands')->insert([
             'initials' => 'A',
-            'description' => 'Aguardando pgto'
+            'description' => 'Aguardando pgto',
+            'allows_low' => 1
         ]);
         DB::table('status_demands')->insert([
             'initials' => 'F',

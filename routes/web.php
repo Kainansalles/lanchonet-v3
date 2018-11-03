@@ -32,8 +32,7 @@ Route::group([
 ], function () {
     Route::get('/', 'DemandsController@index');
     Route::get('all', 'DemandsController@getAllDemands');
-    Route::get('allcancel', 'DemandsController@getCancelDemands');
-    Route::get('allfinalized', 'DemandsController@getFinalizedDemands');
+    Route::get('consultdemand/{id}', 'DemandsController@consultDemands');
     Route::get('cancel/{id}', 'DemandsController@cancelDemand');
     Route::get('confirm/{id}', 'DemandsController@confirmDemand');
     Route::get('/{id}', 'DemandsController@getDemand');

@@ -1,12 +1,20 @@
 $(function(){
-    //setInterval(function() {
-    //    $('#table_demands').DataTable().ajax.reload();
-    //}, 1000 );
+    setInterval(function() {
+        $('#table_demands').DataTable().ajax.reload();
+    }, 1000 );
+
+    $("#filter_status_demand").select2( {
+        placeholder: "Status dos pedidos"
+    });
+
+    $('body').on('change', '#filter_status_demand',function(){
+        $('#table_demands').DataTable().ajax.url( '/admin/pedidos/consultdemand/' + $(this).val()).load();
+    });
 
     // Método para criar a tabela com produtos
     $('#table_demands')
     .on( 'preXhr.dt', function () {
-        mApp.block("#content-table-products", {
+        mApp.block("#content-table-demands", {
             overlayColor: "#000000",
             type: "loader",
             state: "primary",
@@ -14,7 +22,7 @@ $(function(){
         });
     })
     .on( 'xhr.dt', function () {
-        mApp.unblock("#content-table-products");
+        mApp.unblock("#content-table-demands");
         renderDemand();
         optionsDemand();
     })
@@ -32,57 +40,17 @@ $(function(){
             // { "data": "created_at", "title": "Horário do pedido", "visible" : false},
             {data: 'action', name: 'action', "title":"Ações", orderable: false, searchable: false}
         ],
-        // "columnDefs": [
-        //     { "width": "1%", "targets": 0 },
-        //     { "width": "10%", "targets": 1 },
-        //     { "width": "5%", "targets": 2 },
-        //     { "width": "5%", "targets": 3 },
-        //     { "width": "10%", "targets": 4 }
-        // ],
-        dom: 'flrtip',
-        buttons: [
-            {
-                text: 'Entregas atuais',
-                className: 'btn m-btn--pill btn-primary m-btn--wide botoes-filtro',
-                action: function ( e, dt, node, config ) {
-                    $('.botoes-filtro').removeClass('active botoes-filtro-efeito');
-                    $("#table_demands").addClass('fl-datatable');
-                    node.addClass('active botoes-filtro-efeito');
-                    $("#status_demand_description").val('');
-                    $('#table_demands').DataTable().ajax.url( '/admin/pedidos/all' ).load();
-                },
-                init: function (e, settings, json) {
-                    settings.addClass('active botoes-filtro-efeito');
-                }
-            },
-            {
-                text: 'Cancelados',
-                className: 'btn m-btn--pill btn-danger botoes-filtro',
-                action: function ( e, dt, node, config ) {
-                    $('.botoes-filtro').removeClass('active botoes-filtro-efeito');
-                    $("#table_demands").removeClass('fl-datatable');
-                    node.addClass('active botoes-filtro-efeito');
-                    $('#table_demands').DataTable().ajax.url( '/admin/pedidos/allcancel' ).load();
-                }
-            },
-            {
-                text: 'Finalizados',
-                className: 'bbtn m-btn--pill btn-success m-btn--wide botoes-filtro',
-                action: function ( e, dt, node, config ) {
-                    $('.botoes-filtro').removeClass('active botoes-filtro-efeito');
-                    $("#table_demands").removeClass('fl-datatable');
-                    node.addClass('active botoes-filtro-efeito');
-                    $('#table_demands').DataTable().ajax.url( '/admin/pedidos/allfinalized' ).load();
-                }
-            }
+        "columnDefs": [
+            { "width": "1%", "targets": 0 },
+            { "width": "10%", "targets": 1 },
+            { "width": "5%", "targets": 2 },
+            { "width": "5%", "targets": 3 },
+            { "width": "10%", "targets": 4 }
         ],
+        dom: 'flrtip',
         "language": {
             "url": document.location.origin+ "/js/pt-br-translations-datatable.json"
         }
-    });
-
-    $("#m_select2_3, #m_select2_3_validate").select2( {
-        placeholder: "Select a state"
     });
 
     // Método para renderizar demanda

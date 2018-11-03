@@ -17,7 +17,7 @@ class CreateTableStatusDemands extends Migration
             $table->increments('id');
             $table->string('initials');
             $table->string('description');
-            $table->boolean('status')->default(0);
+            $table->boolean('allows_low')->default(0);
             $table->timestamps();
         });
     }

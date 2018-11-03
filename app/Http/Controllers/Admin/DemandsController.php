@@ -13,6 +13,7 @@ use DataTables;
 
 //Models
 use App\Models\Demand;
+use App\Models\StatusDemand;
 
 class DemandsController extends Controller
 {
@@ -33,7 +34,7 @@ class DemandsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        return view('demands');
+        return view('demands')->with('statusDemands', StatusDemand::get(['id', 'initials', 'description']));
     }
 
     /**
@@ -53,35 +54,24 @@ class DemandsController extends Controller
     }
 
     /**
-     * Método responsavel por retornar os pedidos cancelados pro admin
+     * Método responsavel por retornar os pedidos por status específico
      *@return JSON
      */
-    public function getCancelDemands(){
-        $model = Demand::with(['client' ,'status_demand'])->whereIn('status_demand_id', [4])->get();
-
+    public function consultDemands($id){
+        $model = Demand::with(['client' ,'status_demand'])->whereIn('status_demand_id', [$id])->get();
         return  DataTables::collection($model)
             ->addColumn('action', function ($model) {
+                if($model->status_demand->allows_low){
+                    return "
+                    <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>
+                    <button class='btn btn-success confirm_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-check'></span></button>
+                    <button class='btn btn-danger cancel_demand' id='" . $model->id ."'><span class='fa fa-trash'></span></button>";
+                }
                 return "
                 <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>";
             })
             ->toJson();
     }
-
-    /**
-     * Método responsavel por retornar os pedidos finalizados pro admin
-     *@return JSON
-     */
-    public function getFinalizedDemands(){
-        $model = Demand::with(['client' ,'status_demand'])->whereIn('status_demand_id', [3])->get();
-
-        return  DataTables::collection($model)
-            ->addColumn('action', function ($model) {
-                return "
-                <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>";
-            })
-            ->toJson();
-    }
-
 
     /**
      * Método responsavel por retornar um unico pedido
@@ -94,7 +84,7 @@ class DemandsController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $demand,
-                'view' => view('layouts.demands-modal')->with('demand', $demand)->render(),
+                'view' => view('layouts.demands-modal')->with(['demand' => $demand, 'allows_low' => $demand->status_demand->allows_low])->render(),
             ]);
         }
 
