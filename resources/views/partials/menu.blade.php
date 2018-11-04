@@ -27,7 +27,7 @@
                     </a>
                 </li>
                 <li class="m-menu__item " aria-haspopup="true">
-                    <a href="{{ url('/admin/pedidos ') }}" class="m-menu__link ">
+                    <a href="{{ url('/admin/pedidos') }}" class="m-menu__link ">
                         <i class="m-menu__link-icon flaticon-line-graph"></i>
                         <span class="m-menu__link-title">
                             <span class="m-menu__link-wrap">
@@ -46,7 +46,7 @@
                     <i class="m-menu__section-icon flaticon-more-v3"></i>
                 </li>
                 <li class="m-menu__item " aria-haspopup="true">
-                    <a href="../../index.html" class="m-menu__link ">
+                    <a href="{{ url('/admin/configuracoes') }}" class="m-menu__link ">
                         <i class="m-menu__link-icon flaticon-layers"></i>
                         <span class="m-menu__link-title">
                             <span class="m-menu__link-wrap">

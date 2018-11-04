@@ -34,7 +34,7 @@ class ConfigController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        return view('configuracoes')->with(['estabelecimento' => Store::find(1)]);
+        return view('config')->with(['estabelecimento' => Store::find(1)]);
     }
 
     /**

@@ -1,7 +1,7 @@
 $(function(){
     setInterval(function() {
         $('#table_demands').DataTable().ajax.reload();
-    }, 1000 );
+    }, 10000 );
 
     $("#filter_status_demand").select2( {
         placeholder: "Status dos pedidos"
@@ -92,7 +92,7 @@ $(function(){
                 var id = $(this).attr('id');
                 swal({
                     title: "Você tem certeza?",
-                    text: "Uma vez <strong>cancelado</strong>, você não poderá recuperar este pedido!",
+                    text: "Uma vez cancelado, você não poderá recuperar este pedido!",
                     type: "error",
                     showCancelButton: !0,
                     confirmButtonText: "Sim!",

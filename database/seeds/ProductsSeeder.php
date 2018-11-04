@@ -17,7 +17,7 @@ class ProductsSeeder extends Seeder
             Product::create([
                 'name' => $faker->name,
                 'description' => $faker->sentence(),
-                'url_image' => $faker->imageUrl(240, 80, 'food'),
+                'url_image' => $faker->imageUrl(240, 130, 'food'),
                 'price_cost' =>  rand(1,50) . "." . rand(1,99),
                 'price_sale' => rand(25,50) . "." . rand(1,99),
                 'quantity' => rand(1,30),
