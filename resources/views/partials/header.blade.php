@@ -5,7 +5,7 @@
             <div class="m-stack__item m-brand  m-brand--skin-dark ">
                 <div class="m-stack m-stack--ver m-stack--general">
                     <div class="m-stack__item m-stack__item--middle m-brand__logo">
-                        <a href="index.html" class="m-brand__logo-wrapper">
+                        <a href="{{ url('/admin/dashboard') }}" class="m-brand__logo-wrapper">
                             <img alt="" src="{{ asset('img/logo_default_dark.png') }}"/>
                         </a>
                     </div>
@@ -40,7 +40,7 @@
                 <button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-dark " id="m_aside_header_menu_mobile_close_btn">
                     <i class="la la-close"></i>
                 </button>
-                @include('partials.header-left')
+                {{--@include('partials.header-left')--}}
                 @include('partials.header-right')
             </div>
         </div>

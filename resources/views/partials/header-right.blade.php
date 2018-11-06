@@ -299,6 +299,7 @@ m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-cen
                     </div>
                 </div>
             </li>
+
             <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                 <a href="#" class="m-nav__link m-dropdown__toggle">
                                     <span class="m-topbar__userpic">
@@ -317,11 +318,11 @@ m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-cen
                                     <img src="{{ asset('img/oficial-logo-email.png') }}" class="m--img-rounded m--marginless" alt=""/>
                                 </div>
                                 <div class="m-card-user__details">
-                                                    <span class="m-card-user__name m--font-weight-500">
-                                                        Mark Andre
-                                                    </span>
+                                    <span class="m-card-user__name m--font-weight-500">
+                                        {{auth()->user()->name}}
+                                    </span>
                                     <a href="" class="m-card-user__email m--font-weight-300 m-link">
-                                        mark.andre@gmail.com
+                                        {{auth()->user()->email}}
                                     </a>
                                 </div>
                             </div>
@@ -330,52 +331,24 @@ m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-cen
                             <div class="m-dropdown__content">
                                 <ul class="m-nav m-nav--skin-light">
                                     <li class="m-nav__section m--hide">
-                                                        <span class="m-nav__section-text">
-                                                            Section
-                                                        </span>
+                                        <span class="m-nav__section-text">
+                                            Section
+                                        </span>
                                     </li>
                                     <li class="m-nav__item">
                                         <a href="header/profile.html" class="m-nav__link">
                                             <i class="m-nav__link-icon flaticon-profile-1"></i>
                                             <span class="m-nav__link-title">
-                                                                <span class="m-nav__link-wrap">
-                                                                    <span class="m-nav__link-text">
-                                                                        My Profile
-                                                                    </span>
-                                                                    <span class="m-nav__link-badge">
-                                                                        <span class="m-badge m-badge--success">
-                                                                            2
-                                                                        </span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
+                                                <span class="m-nav__link-wrap">
+                                                    <span class="m-nav__link-text">
+                                                        My Profile
+                                                    </span>
+                                                </span>
+                                            </span>
                                         </a>
                                     </li>
-                                    <li class="m-nav__item">
-                                        <a href="header/profile.html" class="m-nav__link">
-                                            <i class="m-nav__link-icon flaticon-share"></i>
-                                            <span class="m-nav__link-text">
-                                                                Activity
-                                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-nav__item">
-                                        <a href="header/profile.html" class="m-nav__link">
-                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                            <span class="m-nav__link-text">
-                                                                Messages
-                                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-nav__separator m-nav__separator--fit"></li>
-                                    <li class="m-nav__item">
-                                        <a href="header/profile.html" class="m-nav__link">
-                                            <i class="m-nav__link-icon flaticon-info"></i>
-                                            <span class="m-nav__link-text">
-                                                                FAQ
-                                                            </span>
-                                        </a>
-                                    </li>
+                                    {{--<li class="m-nav__separator m-nav__separator--fit"></li>--}}
+
                                     <li class="m-nav__item">
                                         <a href="{{ url('/admin/configuracoes') }}" class="m-nav__link">
                                             <i class="m-nav__link-icon fa fa-gear"></i>
