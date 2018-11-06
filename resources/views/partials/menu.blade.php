@@ -4,7 +4,7 @@
             <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
                 <li class="m-menu__item " aria-haspopup="true">
                     <a href="../../index.html" class="m-menu__link ">
-                        <i class="m-menu__link-icon flaticon-line-graph"></i>
+                        <i class="m-menu__link-icon fa fa-pie-chart"></i>
                         <span class="m-menu__link-title">
                             <span class="m-menu__link-wrap">
                                 <span class="m-menu__link-text">
@@ -16,7 +16,7 @@
                 </li>
                 <li class="m-menu__item " aria-haspopup="true">
                     <a href="{{ url('/admin/produtos') }}" class="m-menu__link ">
-                        <i class="m-menu__link-icon flaticon-line-graph"></i>
+                        <i class="m-menu__link-icon fa fa-briefcase"></i>
                         <span class="m-menu__link-title">
                             <span class="m-menu__link-wrap">
                                 <span class="m-menu__link-text">
@@ -28,7 +28,7 @@
                 </li>
                 <li class="m-menu__item " aria-haspopup="true">
                     <a href="{{ url('/admin/pedidos') }}" class="m-menu__link ">
-                        <i class="m-menu__link-icon flaticon-line-graph"></i>
+                        <i class="m-menu__link-icon fa fa-shopping-cart"></i>
                         <span class="m-menu__link-title">
                             <span class="m-menu__link-wrap">
                                 <span class="m-menu__link-text">
@@ -47,7 +47,7 @@
                 </li>
                 <li class="m-menu__item " aria-haspopup="true">
                     <a href="{{ url('/admin/configuracoes') }}" class="m-menu__link ">
-                        <i class="m-menu__link-icon flaticon-layers"></i>
+                        <i class="m-menu__link-icon fa fa-gear"></i>
                         <span class="m-menu__link-title">
                             <span class="m-menu__link-wrap">
                                 <span class="m-menu__link-text">
