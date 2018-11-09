@@ -1,307 +1,118 @@
-@extends('layouts.app')
-{{--aqui vem o layout do login--}}
-
-@section('content')
-<!-- END: Left Aside -->
-<div class="m-grid__item m-grid__item--fluid m-wrapper">
-		<!-- BEGIN: Subheader -->
-		<div class="m-subheader ">
-			<div class="d-flex align-items-center">
-				<div class="mr-auto">
-					<h3 class="m-subheader__title m-subheader__title--separator">
-						jQuery Idle
-					</h3>
-					<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-						<li class="m-nav__item m-nav__item--home">
-							<a href="#" class="m-nav__link m-nav__link--icon">
-								<i class="m-nav__link-icon la la-home"></i>
-							</a>
-						</li>
-						<li class="m-nav__separator">
-							-
-						</li>
-						<li class="m-nav__item">
-							<a href="" class="m-nav__link">
-								<span class="m-nav__link-text">
-									Utils
-								</span>
-							</a>
-						</li>
-						<li class="m-nav__separator">
-							-
-						</li>
-						<li class="m-nav__item">
-							<a href="" class="m-nav__link">
-								<span class="m-nav__link-text">
-									Idle Timer
-								</span>
-							</a>
-						</li>
-					</ul>
+<!DOCTYPE html>
+<html lang="pt-br" >
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Metronic | Login Page - 3
+	</title>
+	<meta name="description" content="Latest updates and statistic charts">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!--begin::Web font -->
+	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+	<script>
+        WebFont.load({
+            google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+        });
+	</script>
+	<!--end::Web font -->
+	<!--begin::Base Styles -->
+	<link href="{{ asset('css/vendors.bundle.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+	<!--end::Base Styles -->
+	<link rel="shortcut icon" href="../../../assets/demo/default/media/img/logo/favicon.ico" />
+</head>
+<!-- end::Head -->
+<!-- end::Body -->
+<body  class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+	<div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--signin m-login--2 m-login-2--skin-2" id="m_login" style="background-image: url(../../../assets/app/media/img//bg/bg-3.jpg);">
+		<div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
+			<div class="m-login__container">
+				<div class="m-login__logo">
+					<a href="#">
+						<img src="{{ asset('img/oficial-logo-email.png') }}">
+					</a>
 				</div>
-				<div>
-					<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
-						<a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-							<i class="la la-plus m--hide"></i>
-							<i class="la la-ellipsis-h"></i>
-						</a>
-						<div class="m-dropdown__wrapper">
-							<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-							<div class="m-dropdown__inner">
-								<div class="m-dropdown__body">
-									<div class="m-dropdown__content">
-										<ul class="m-nav">
-											<li class="m-nav__section m-nav__section--first m--hide">
-												<span class="m-nav__section-text">
-													Quick Actions
-												</span>
-											</li>
-											<li class="m-nav__item">
-												<a href="" class="m-nav__link">
-													<i class="m-nav__link-icon flaticon-share"></i>
-													<span class="m-nav__link-text">
-														Activity
-													</span>
-												</a>
-											</li>
-											<li class="m-nav__item">
-												<a href="" class="m-nav__link">
-													<i class="m-nav__link-icon flaticon-chat-1"></i>
-													<span class="m-nav__link-text">
-														Messages
-													</span>
-												</a>
-											</li>
-											<li class="m-nav__item">
-												<a href="" class="m-nav__link">
-													<i class="m-nav__link-icon flaticon-info"></i>
-													<span class="m-nav__link-text">
-														FAQ
-													</span>
-												</a>
-											</li>
-											<li class="m-nav__item">
-												<a href="" class="m-nav__link">
-													<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-													<span class="m-nav__link-text">
-														Support
-													</span>
-												</a>
-											</li>
-											<li class="m-nav__separator m-nav__separator--fit"></li>
-											<li class="m-nav__item">
-												<a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-													Submit
-												</a>
-											</li>
-										</ul>
-									</div>
-								</div>
+				<div class="m-login__signin">
+					<div class="m-login__head">
+						<h3 class="m-login__title">
+							Entrar no Admin
+						</h3>
+					</div>
+					<form class="m-login__form m-form" action="{{ url('/login') }}" method="POST">
+						@csrf
+						<div class="form-group m-form__group">
+							<input class="form-control m-input"   type="text" placeholder="Email" name="email" autocomplete="off">
+						</div>
+						<div class="form-group m-form__group">
+							<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password">
+						</div>
+						<div class="row m-login__form-sub">
+							<div class="col m--align-left m-login__form-left">
+								<label class="m-checkbox  m-checkbox--focus">
+									<input type="checkbox" name="remember">
+									Lembrar-me
+									<span></span>
+								</label>
+							</div>
+							<div class="col m--align-right m-login__form-right">
+								<a href="javascript:;" id="m_login_forget_password" class="m-link">
+									Esqueceu sua senha?
+								</a>
 							</div>
 						</div>
-					</div>
+						<div class="m-login__form-action">
+							<button id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
+								Entrar
+							</button>
+						</div>
+					</form>
 				</div>
-			</div>
-		</div>
-		<!-- END: Subheader -->
-		<div class="m-content">
-			<div class="alert alert-brand m-alert m-alert--icon m-alert--air m-alert--square m--margin-bottom-30" role="alert">
-				<div class="m-alert__icon">
-					<i class="flaticon-exclamation-1"></i>
-				</div>
-				<div class="m-alert__text">
-					jQuery Idle Timer fires a custom event when the user is "idle". To learn more please check out
-					<a href="https://github.com/thorst/jquery-idletimer" class="m-link m-link--warning m--font-bold" target="_blank">
-						the plugin's official homepage
-					</a>
-				</div>
-			</div>
-			<!--begin::Portlet-->
-			<div class="m-portlet m-portlet--tab">
-				<div class="m-portlet__head">
-					<div class="m-portlet__head-caption">
-						<div class="m-portlet__head-title">
-							<span class="m-portlet__head-icon m--hide">
-								<i class="la la-gear"></i>
-							</span>
-							<h3 class="m-portlet__head-text">
-								jQuery Idle Timer
-							</h3>
+				<div class="m-login__forget-password">
+					<div class="m-login__head">
+						<h3 class="m-login__title">
+							Esqueceu sua senha?
+						</h3>
+						<div class="m-login__desc">
+							Insira seu e-mail para redefinir sua senha:
 						</div>
 					</div>
+					<form class="m-login__form m-form" action="{{ url('/password/email') }}" method="POST">
+						@csrf
+						<div class="form-group m-form__group">
+							<input class="form-control m-input" type="text" placeholder="Email" name="email" id="m_email" autocomplete="off">
+						</div>
+						<div class="m-login__form-action">
+							<button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn m-login__btn--primaryr">
+								Enviar
+							</button>
+							&nbsp;&nbsp;
+							<button id="m_login_forget_password_cancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom m-login__btn">
+								Cancelar
+							</button>
+						</div>
+					</form>
 				</div>
-				<div class="m-portlet__body">
-					The idle timer is built on jQuery and provides two events:
-					<code>
-					idle.idleTimer
-				</code>
-				and
-				<code>
-				active.idleTimer
-			</code>
-			,
-which fire when the user's idle state has changed.
-When you move your mouse over the page or start typing, you're considered
-			<code>
-			active
-		</code>
-		.
-On this page we have two idle timers. One for the entire document. Another for the text area on the right (or bottom if your on mobile).
-	</div>
-</div>
-<!--end::Portlet-->
-<div class="row">
-	<div class="col-lg-6">
-		<!--begin::Portlet-->
-		<div class="m-portlet m-portlet--tab">
-			<div class="m-portlet__head">
-				<div class="m-portlet__head-caption">
-					<div class="m-portlet__head-title">
-						<span class="m-portlet__head-icon m--hide">
-							<i class="la la-gear"></i>
-						</span>
-						<h3 class="m-portlet__head-text">
-							Document
-							<small>
-								<span id="docTimeout"></span>
-								second timeout
-							</small>
-						</h3>
-					</div>
-				</div>
-			</div>
-			<div class="m-portlet__body">
-				<div class="btn-group m--margin-bottom-10">
-					<a href="javascript:;" id="btPause" class="btn btn-secondary">
-						Pause
-					</a>
-					<a href="javascript:;" id="btResume" class="btn btn-secondary">
-						Resume
-					</a>
-					<a href="javascript:;" id="btElapsed" class="btn btn-secondary">
-						Elapsed
-					</a>
-					<a href="javascript:;" id="btInit" class="btn btn-secondary">
-						Init
-					</a>
-					<a href="javascript:;" id="btDestroy" class="btn btn-secondary">
-						Destroy
-					</a>
-				</div>
-				<textarea rows="10" cols="30" id="docStatus" class="form-control"></textarea>
-				<br />
 			</div>
 		</div>
-		<!--end::Portlet-->
-	</div>
-	<div class="col-lg-6">
-		<!--begin::Portlet-->
-		<div class="m-portlet m-portlet--tab">
-			<div class="m-portlet__head">
-				<div class="m-portlet__head-caption">
-					<div class="m-portlet__head-title">
-						<span class="m-portlet__head-icon m--hide">
-							<i class="la la-gear"></i>
-						</span>
-						<h3 class="m-portlet__head-text">
-							Element
-							<small>
-								<span id="elTimeout"></span>
-								second timeout
-							</small>
-						</h3>
-					</div>
-				</div>
-			</div>
-			<div class="m-portlet__body">
-				<div class="btn-group m--margin-bottom-10">
-					<a href="javascript:;" id="btReset" class="btn btn-secondary">
-						Reset
-					</a>
-					<a href="javascript:;" id="btLastActive" class="btn btn-secondary">
-						Last Active
-					</a>
-					<a href="javascript:;" id="btRemaining" class="btn btn-secondary">
-						Remaining
-					</a>
-					<a href="javascript:;" id="btState" class="btn btn-secondary">
-						State
-					</a>
-				</div>
-				<textarea rows="10" cols="30" id="elStatus" class="form-control"></textarea>
-				<br />
-			</div>
-		</div>
-		<!--end::Portlet-->
 	</div>
 </div>
-<!--end::Portlet-->
-</div>
-	</div>
+<!-- end:: Page -->
+<!--begin::Base Scripts -->
+<script src="{{ asset('js/vendors.bundle.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/scripts.bundle.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/login.js') }}" type="text/javascript"></script>
+<!--end::Page Snippets -->
+</body>
+<!-- end::Body -->
+</html>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                        {!! csrf_field() !!}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i>Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
 
 
 
