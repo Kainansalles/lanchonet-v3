@@ -24,8 +24,8 @@ class StoresSeeder extends Seeder
             'telephone' => '1147477772',
             'bank_account' => '06392',
             'bank_agency' => '4876',
-            'open_hours' => '2018-01-01 09:00:00',
-            'close_hours' => '2019-01-01 23:00:00',
+            'open_hours' => '2018-01-01 00:00:00',
+            'close_hours' => '2019-01-01 23:59:00',
             'minutes_min_recall' => "00:15",
             'works_days' => 'Sun,Mon,Tue,Wed,Thu,Fri,Sat',
             'status' => 1

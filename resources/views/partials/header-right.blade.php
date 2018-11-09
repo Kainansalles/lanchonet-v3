@@ -319,10 +319,10 @@ m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-cen
                                 </div>
                                 <div class="m-card-user__details">
                                     <span class="m-card-user__name m--font-weight-500">
-                                        {{auth()->user()->name}}
+                                        {{-- {{auth()->user()->name}} --}}
                                     </span>
                                     <a href="" class="m-card-user__email m--font-weight-300 m-link">
-                                        {{auth()->user()->email}}
+                                       {{-- {{auth()->user()->email}} --}}
                                     </a>
                                 </div>
                             </div>
@@ -341,7 +341,7 @@ m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-cen
                                             <span class="m-nav__link-title">
                                                 <span class="m-nav__link-wrap">
                                                     <span class="m-nav__link-text">
-                                                        My Profile
+                                                        Meu perfil
                                                     </span>
                                                 </span>
                                             </span>
@@ -359,8 +359,8 @@ m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-cen
                                     </li>
                                     <li class="m-nav__separator m-nav__separator--fit"></li>
                                     <li class="m-nav__item">
-                                        <a href="snippets/pages/user/login-1.html" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
-                                            Logout
+                                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
+                                            Sair
                                         </a>
                                     </li>
                                 </ul>
@@ -372,4 +372,7 @@ m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-cen
         </ul>
     </div>
 </div>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
 <!-- END: Topbar -->
