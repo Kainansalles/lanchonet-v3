@@ -1,13 +1,12 @@
 $(function(){
     setInterval(function() {
         $('#table_demands').DataTable().ajax.reload();
-    }, 10000 );
+    }, 60000 );
 
-    $("#filter_status_demand").select2( {
-        placeholder: "Status dos pedidos"
-    });
+    $("#filter_status_demand").select2();
 
     $('body').on('change', '#filter_status_demand',function(){
+        $('#status_delivery').removeClass('active');
         $('#table_demands').DataTable().ajax.url( '/admin/pedidos/consultdemand/' + $(this).val()).load();
     });
 
@@ -25,6 +24,15 @@ $(function(){
         mApp.unblock("#content-table-demands");
         renderDemand();
         optionsDemand();
+        $('body').on('click', '#status_delivery',function(){
+            $(this).addClass('active');
+            $('#table_demands').DataTable().ajax.url( '/admin/pedidos/all').load();
+        });
+        $("body").ready(function(){
+            if($('#status_delivery').hasClass('active')){
+                $('#table_demands tbody tr:first td:last-child').append("<div class='m-spinner m-spinner--warning m-spinner--lg'></div>");
+            }
+        });
     })
     .DataTable({
         orderFixed: [ 3, 'desc' ],

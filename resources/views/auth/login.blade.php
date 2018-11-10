@@ -21,7 +21,7 @@
 	<link href="{{ asset('css/vendors.bundle.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 	<!--end::Base Styles -->
-	<link rel="shortcut icon" href="{{ asset('img/oficial-logo-short.png') }}" />
+	<link rel="shortcut icon" href="{{ asset('img/oficial-logo-ico.ico') }}" />
 </head>
 <!-- end::Head -->
 <!-- end::Body -->

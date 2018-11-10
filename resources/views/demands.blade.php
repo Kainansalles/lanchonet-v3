@@ -49,17 +49,22 @@
                 </div>
             </div>
             <div class="m-portlet__body">
-
                 <div class="form-group m-form__group row">
                     <div class="col-lg-4 col-md-4 col-sm-10 col-xs-10">
-                        <label class="col-form-label col-lg-3 col-sm-12">
-                            <strong>Status</strong>
-                        </label>
-
+                        <button id="status_delivery" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill active">
+                            <span>
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>
+                                    Lista de entregas
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-10 col-xs-10">
                         <select class="form-control m-select2" id="filter_status_demand" name="status_demand">
                             <optgroup label="Filtre por Status">
                                 @foreach($statusDemands as $status)
-                                    <option value="{{$status->id}}" {{$status->initials === "A" ? "selected" : ""}}>
+                                    <option value="{{$status->id}}">
                                         {{$status->description}}
                                     </option>
                                 @endforeach
