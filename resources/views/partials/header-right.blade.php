@@ -303,7 +303,7 @@ m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-cen
             <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                 <a href="#" class="m-nav__link m-dropdown__toggle">
                                     <span class="m-topbar__userpic">
-                                        <img src="{{ asset('img/oficial-logo-email.png') }}" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                        <img src="{{ asset('img/oficial-logo-short.png') }}" class="m--img-rounded m--marginless m--img-centered" alt=""/>
                                     </span>
                     <span class="m-topbar__username m--hide">
                                         Nick
@@ -315,14 +315,14 @@ m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-cen
                         <div class="m-dropdown__header m--align-center" style="background: url( {{ asset('img/user_profile_bg.jpg') }} ); background-size: cover;">
                             <div class="m-card-user m-card-user--skin-dark">
                                 <div class="m-card-user__pic">
-                                    <img src="{{ asset('img/oficial-logo-email.png') }}" class="m--img-rounded m--marginless" alt=""/>
+                                    <img src="{{ asset('img/oficial-logo-short.png') }}" class="m--img-rounded m--marginless" alt=""/>
                                 </div>
                                 <div class="m-card-user__details">
                                     <span class="m-card-user__name m--font-weight-500">
-                                        {{-- {{auth()->user()->name}} --}}
+                                        {{auth()->user()->name}}
                                     </span>
                                     <a href="" class="m-card-user__email m--font-weight-300 m-link">
-                                       {{-- {{auth()->user()->email}} --}}
+                                       {{auth()->user()->email}}
                                     </a>
                                 </div>
                             </div>
