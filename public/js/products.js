@@ -11,6 +11,7 @@ $(function(){
         $("#imagem").hide();
         $("#id_save").val("");
         $('#produtosForm').trigger("reset");
+        $("#exampleModalLabel").text("Novo produto");
         //$('#produtosForm').validate().resetForm();
     });
 
@@ -67,6 +68,7 @@ $(function(){
             $.getJSON( "/api/products/"+id, function( data ) {
                 var data = data.data;
                 $("#name").val(data.name);
+                $("#exampleModalLabel").html("Editando produto - <strong>" + data.name + "</strong>");
                 $("#price_cost").val(data.price_cost);
                 $("#price_sale").val(data.price_sale);
                 $("#quantity").val(data.quantity);

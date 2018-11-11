@@ -41,15 +41,6 @@ class DashboardController extends Controller
         $data = Client::select(\DB::raw('count(*) as visits'), \DB::raw('DATE_FORMAT(created_at,\' %Y-%m\') AS "country"'))
         ->groupBy(\DB::raw('country'))
         ->get();
-        $rgb = 60;
-        $rgb2 = 141;
-        $rgb3 = 188;
-        foreach($data as $d){
-            $d['color'] = sprintf("#%02x%02x%02x", $rgb, $rgb2, $rgb3); // #0d00ff;
-            $rgb = $rgb + 10;
-            $rgb2 = $rgb2 + 8;
-            $rgb3 = $rgb3 + 4;
-        }
         return response()->json($data);
     }
 
@@ -60,7 +51,7 @@ class DashboardController extends Controller
     public function dataDemands(){
         $data = Demand::select(\DB::raw('count(*) as litres, status_demands.description AS country'))
         ->join('status_demands', 'demands.status_demand_id', '=', 'status_demands.id')
-        ->groupBy('status_demand_id')
+        ->groupBy('demands.status_demand_id')
         ->get();
         return response()->json($data);
     }
@@ -72,7 +63,7 @@ class DashboardController extends Controller
     public function dataProducts(){
         $data = DemandxProduct::select(\DB::raw('products.name as title, count(*) as value'))
             ->join('products', 'demand_x_products.product_id', '=', 'products.id')
-            ->groupBy('product_id')
+            ->groupBy('demand_x_products.product_id')
             ->orderBy('value', 'DESC')
             ->limit(3)
             ->get();
