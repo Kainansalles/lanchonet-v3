@@ -48,6 +48,14 @@ Route::group([
 
 Route::group([
     'namespace' => 'Admin',
+    'prefix' => 'admin/usuarios/'
+],function () {
+    Route::get('/', 'UsersController@index');
+    Route::get('all', 'UsersController@getAllUsers');
+});
+
+Route::group([
+    'namespace' => 'Admin',
     'prefix' => 'admin/configuracoes/'
 ],function () {
     Route::get('/', 'ConfigController@index');

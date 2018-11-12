@@ -49,7 +49,8 @@ class ProductsController extends Controller
         $model = Product::query();
         return DataTables::of($model)
         ->addColumn('action', function ($model) {
-            return "<button class='btn btn-success editar_botao' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-edit'></span></button><button class='btn btn-danger excluir_botao' id='" . $model->id ."' ><span class='fa fa-trash-o'></span></button>";
+            return "<button class='btn btn-success editar_botao' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-edit'></span></button>
+                    <button class='btn btn-danger excluir_botao' id='" . $model->id ."' ><span class='fa fa-trash-o'></span></button>";
         })
         ->toJson();
     }
