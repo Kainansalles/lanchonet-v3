@@ -10,10 +10,6 @@
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
 Route::post('clients/new', 'ClientsController@setNewUser');//->middleware(['cors']);
 Route::post('clients/recoverpw', 'ClientsController@recoverPW');
 Route::group([
@@ -39,6 +35,7 @@ Route::group([
     'prefix' => 'password/reset'
 ], function () {
     Route::post('/create', 'PasswordResetController@create');
+    Route::get('/redirectapp/{token}', 'PasswordResetController@redirectToApp');
     Route::get('/find/{token}', 'PasswordResetController@find');
     Route::post('/reset', 'PasswordResetController@reset');
 });
@@ -53,7 +50,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'demand',
-    //'middleware' => 'jwt.auth'
+    'middleware' => 'jwt.auth'
 ],
     function () {
         Route::post('/make', 'DemandsController@doDemand');
@@ -62,14 +59,6 @@ Route::group([
 use App\Models\DemandxProduct;
 
 Route::get('testes', function(){
-    /*
-    SELECT pro.name AS title, count(*) AS value
-	FROM `demand_x_products` AS de
-	INNER JOIN products AS pro
-    	ON de.product_id = pro.id
-    GROUP BY product_id ORDER BY value DESC LIMIT 3;
-    */
-
     $data = DemandxProduct::select(\DB::raw('products.name as title, count(*) as value'))
         ->join('products', 'demand_x_products.product_id', '=', 'products.id')
         ->groupBy('product_id')

@@ -48,7 +48,7 @@ class PasswordResetController extends Controller
                 );
                 if ($user && $passwordReset)
                     $user->notify(
-                        new PasswordResetRequest($passwordReset->token, $user->name)
+                        new PasswordResetRequest($passwordReset->token, $user)
                     );
                 return response()->json([
                     'success' => true,
@@ -90,7 +90,12 @@ class PasswordResetController extends Controller
             'success' => true,
             'token' => $passwordReset]);
     }
-     /**
+
+    public function redirectToApp($token){
+        header("Location: lanchonet://recovery?token=$token");
+        exit();
+    }
+    /**
      * Reset password
      *
      * @param  [string] email

@@ -50,12 +50,12 @@ class ClientsController extends Controller{
                 if (! $token = $this->jwtAuth->attempt($credentials)) {
                     return response()->json([
                         'success' => false,
-                        'message' => 'Ops, those credentials are invalid']);
+                        'message' => 'Ops, credenciais estão invalidas']);
                 }
                 return Response()->json([
                     'success' => true,
                     'token' => $token,
-                    'message' => 'Authenticate Success']);
+                    'message' => 'Autenticado com sucesso']);
             }else{
                 return response()->json([
                     'success' => false,
@@ -64,7 +64,7 @@ class ClientsController extends Controller{
         }
         return Response()->json([
             'success' => false,
-            'message' => 'Please determine JSON inside {authenticate}']);
+            'message' => 'Por favor determine o JSON dentro de {authenticate}']);
     }
 
     public function Refresh(){
@@ -73,7 +73,7 @@ class ClientsController extends Controller{
         return Response()->json([
             'success' => true,
             'token' => $token,
-            'message' => 'Token refreshed with success']);
+            'message' => 'Token recarregado com sucesso!']);
     }
 
     public function Logout(){
@@ -86,11 +86,11 @@ class ClientsController extends Controller{
         if (!$data = $this->jwtAuth->parseToken()->authenticate()) {
             return Response()->json([
                 'success' => false,
-                'message' => 'User not found, try again']);
+                'message' => 'Usuário não encontrado, tente novamente!']);
         }
         return Response()->json([
             'success' => true,
             'data' => $data,
-            'message' => 'Success to get data']);
+            'message' => 'Sucesso ao pegar os dados!']);
     }
 }

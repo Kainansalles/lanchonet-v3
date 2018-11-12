@@ -144,12 +144,12 @@ class ClientsController extends Controller{
                         }else{
                             return response()->json([
                                 'success' => false,
-                                'message' => 'Old password incorrect']);
+                                'message' => 'Senha antiga incorreta']);
                         }
                         DB::commit();
                         return response()->json([
                             'success' => true,
-                            'message' => 'Successfully edited user data']);
+                            'message' => 'Sucesso ao editar']);
                     }
                 } catch (\Exception $e) {
                     DB::rollback();
@@ -164,7 +164,7 @@ class ClientsController extends Controller{
         }
         return response()->json([
             'success' => false,
-            'message' => 'Please determine JSON inside {editpw}']);
+            'message' => 'Por favor determine o JSON dentro de {editpw}']);
     }
 
     /**
