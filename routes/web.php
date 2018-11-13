@@ -52,6 +52,7 @@ Route::group([
 ],function () {
     Route::get('/', 'UsersController@index');
     Route::get('all', 'UsersController@getAllUsers');
+    Route::post('new', 'UsersController@newUser');
 });
 
 Route::group([

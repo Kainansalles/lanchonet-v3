@@ -41,12 +41,12 @@
             <div class="m-portlet m-portlet--mobile" id="content-table-users">
                 <div class="m-portlet__body">
                     <!--begin: Datatable -->
-                    <table id="table_produtos" class="table table-striped- table-bordered table-hover table-checkable responsive no-wrap"></table>
+                    <table id="table_users" class="table table-striped- table-bordered table-hover table-checkable responsive no-wrap"></table>
                     <!--end: Datatable -->
                 </div>
             </div>
 
-            <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet m-portlet--mobile" id="content-new-users">
                 <div class="m-portlet">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <!--begin::Form-->
-                    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="newuserform" method="POST" action="{{ url('/usuarios/novo') }}" novalidate="novalidate">
+                    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" id="newuserform" method="POST" novalidate="novalidate">
                         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                         <div class="m-portlet__body">
                             <div class="form-group m-form__group row">
@@ -91,13 +91,13 @@
                                     <label class="">
                                         Senha
                                     </label>
-                                    <input type="password" name="password" class="form-control m-input" >
+                                    <input type="password" name="password" id="password" class="form-control m-input" >
                                 </div>
                                 <div class="col-lg-6">
                                     <label>
                                         Confirmar senha
                                     </label>
-                                    <input type="password" name="password" class="form-control m-input" >
+                                    <input type="password" name="password_confirm" class="form-control m-input" >
                                 </div>
                             </div>
 
