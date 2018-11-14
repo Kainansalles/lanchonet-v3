@@ -10,6 +10,19 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('download/app', function(){
+    //PDF file is stored under project/public/download/lanchonet-app.apk
+    $file= public_path(). "/download/lanchonet-app.apk";
+
+    $headers = [
+        'Content-Type'=>'application/vnd.android.package-archive',
+        'Content-Disposition'=> 'attachment; filename="android.apk"',
+    ];
+
+    return Response::download($file, 'lanchonet-app.apk', $headers);
+});
+
 Auth::routes();
 
 Route::group([
