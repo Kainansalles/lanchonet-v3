@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\Admin\UsersRequest;
 use App\Http\Controllers\Controller;
 use DataTables;
@@ -48,8 +49,7 @@ class UsersController extends Controller
         $model = User::whereNotIn('id', [\Auth::user()->id])->get();
         return DataTables::collection($model)
             ->addColumn('action', function ($model) {
-                return "<button class='btn btn-success editar_botao' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-edit'></span></button>
-                    <button class='btn btn-danger excluir_botao' id='" . $model->id ."' ><span class='fa fa-trash-o'></span></button>";
+                return "<button class='btn btn-danger excluir_botao' id='" . $model->id ."' ><span class='fa fa-trash-o'></span></button>";
             })
             ->toJson();
     }
@@ -71,12 +71,31 @@ class UsersController extends Controller
                 return response()->json(['success' => 'Usuário inserido com sucesso!']);
 
         } catch (\Exception $e) {
-            DB::rollback();
             return response()->json([
                 'success' => true,
                 'errors' => $e->getMessage()]);
         }
 
+    }
+
+    /**
+     * Método para excluir usuário
+     *@param $id
+     *@return json
+    */
+    public function Destroy($id){    
+        try {
+            $user = User::find($id);
+            if($user->delete())
+                return response()->json(['success' => 'Deletado com sucesso!']);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => true,
+                'errors' => $e->getMessage()]);
+        }
+
+        return response()->json(['errors' => 'Falha ao deletar']);
     }
 
 }

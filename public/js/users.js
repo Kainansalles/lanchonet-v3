@@ -11,7 +11,7 @@ $(function(){
         })
         .on( 'xhr.dt', function () {
             mApp.unblock("#content-table-users");
-            //actionsButtons();
+            actionsButtons();
         })
         .DataTable({
             pageLength: 5,
@@ -84,6 +84,42 @@ $(function(){
                 });
            }
        });
+
+       //Método para dar ações aos botões do datatable
+    function actionsButtons(){
+        $('body').on('click', '.excluir_botao', function(){
+            var id = $(this).attr('id');
+            swal({
+                title: "Você tem certeza?",
+                text: "Você não vai poder reverter isso!",
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonText: "Sim, deletar!",
+                cancelButtonText: "Não, cancelar!"
+            }).then(function(e) {
+                if(e.value){
+                    console.log(id);
+                    deletarProduto(id);
+                    swal("Bom trabalho!", "Produto deletado com sucesso!", "success");
+                }
+            });
+        });
+    }
+
+    // Método para deletar produto
+    function deletarProduto(id){
+        $.ajax({
+            type:"DELETE",
+            url:'/admin/usuarios/delete/'+id,
+            headers: {'X-CSRF-TOKEN': $('#token').val()},
+            dataType: 'json',
+            success: function(data){
+                if(data.hasOwnProperty("success")){
+                    $('#table_produtos').DataTable().ajax.reload();
+                }
+            }
+        });
+    }
 
     // Método para mostrar erros
     function messageError(value){

@@ -66,6 +66,7 @@ Route::group([
     Route::get('/', 'UsersController@index');
     Route::get('all', 'UsersController@getAllUsers');
     Route::post('new', 'UsersController@newUser');
+    Route::delete('delete/{id}', 'UsersController@Destroy');
 });
 
 Route::group([
