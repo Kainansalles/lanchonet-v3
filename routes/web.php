@@ -76,3 +76,7 @@ Route::group([
     Route::get('/', 'ConfigController@index');
     Route::put('editar/{id}', 'ConfigController@Editar');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
