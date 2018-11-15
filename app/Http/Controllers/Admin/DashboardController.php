@@ -38,7 +38,8 @@ class DashboardController extends Controller
     }
 
     public function dataClients(){
-        $data = Client::select(\DB::raw('count(*) as visits'), \DB::raw('DATE_FORMAT(created_at,\' %Y-%m\') AS "country"'))
+        $data = Client::select(\DB::raw('count(*) as visits'), \DB::raw("LPAD(CAST(EXTRACT(Month from created_at) AS VARCHAR), '2', '0') || '-' ||
+        CAST(Extract(Year from created_at) AS VARCHAR) AS country"))
         ->groupBy(\DB::raw('country'))
         ->get();
         return response()->json($data);
@@ -51,7 +52,7 @@ class DashboardController extends Controller
     public function dataDemands(){
         $data = Demand::select(\DB::raw('count(*) as litres, status_demands.description AS country'))
         ->join('status_demands', 'demands.status_demand_id', '=', 'status_demands.id')
-        ->groupBy('demands.status_demand_id')
+        ->groupBy('status_demands.description')
         ->get();
         return response()->json($data);
     }
@@ -63,7 +64,7 @@ class DashboardController extends Controller
     public function dataProducts(){
         $data = DemandxProduct::select(\DB::raw('products.name as title, count(*) as value'))
             ->join('products', 'demand_x_products.product_id', '=', 'products.id')
-            ->groupBy('demand_x_products.product_id')
+            ->groupBy('products.name')
             ->orderBy('value', 'DESC')
             ->limit(3)
             ->get();
