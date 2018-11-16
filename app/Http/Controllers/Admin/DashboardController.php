@@ -49,7 +49,7 @@ class DashboardController extends Controller
      *
      */
     public function dataDemands(){
-        $data = Demand::select(\DB::raw('count(*) as litres, status_demands.description AS country'))
+        $data = Demand::select(\DB::raw('count(*) as value, status_demands.description AS title'))
         ->join('status_demands', 'demands.status_demand_id', '=', 'status_demands.id')
         ->groupBy('demands.status_demand_id')
         ->get();
