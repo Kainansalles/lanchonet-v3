@@ -56,6 +56,8 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'token_has_been_blacklisted'], $exception->getStatusCode());
         }  if ($exceptionClass == "Tymon\JWTAuth\Exceptions\JWTException"){
             return response()->json(['error' => 'token_absent'], $exception->getStatusCode());
+        }else if ($exceptionClass == "Symfony\Component\HttpKernel\Exception\NotFoundHttpException"){
+            return response()->view('errors.missing', [], 404);
         }
         /*else if ($exception instanceof \Illuminate\Validation\ValidationException){
             return response()->json(['errors' => $exception->errors()]);
