@@ -5,7 +5,7 @@ var chart = AmCharts.makeChart("chartdivClients", {
     "dataDateFormat": "YYYY-MM",
     "dataLoader": {
         "url": "/dataclients",
-        "reload": 30,
+        "reload": 60,
         "noStyles": true,
     },
     "graphs": [{
@@ -35,37 +35,32 @@ var chart = AmCharts.makeChart("chartdivClients", {
 
 });
 
-var chartDemands = AmCharts.makeChart("chartdivDemands", {
+var chart = AmCharts.makeChart( "chartdivDemands", {
     "type": "pie",
     "theme": "light",
-    "innerRadius": "40%",
-    "startDuration": 1,
-    "gradientRatio": [-0.4, -0.4, -0.4, -0.4, -0.4, -0.4, 0, 0.1, 0.2, 0.1, 0, -0.2, -0.5],
     "dataLoader": {
         "url": "/datademands",
-        "reload": 30,
+        "reload": 60,
         "noStyles": true,
     },
-    "balloonText": "[[value]]",
-    "valueField": "litres",
-    "titleField": "country",
-    "balloon": {
-        "drop": true,
-        "adjustBorderColor": false,
-        "color": "#FFFFFF",
-        "fontSize": 16
-    },
+    "titleField": "title",
+    "valueField": "value",
+    "labelRadius": 5,
+
+    "radius": "42%",
+    "innerRadius": "60%",
+    "labelText": "[[title]]",
     "export": {
-        "enabled": true
+      "enabled": true
     }
-});
+  } );
 
 var chartdivProducts = AmCharts.makeChart( "chartdivProducts", {
     "type": "funnel",
     "theme": "light",
     "dataLoader": {
         "url": "/dataproducts",
-        "reload": 30,
+        "reload": 60,
         "noStyles": true,
     },
     "balloon": {
