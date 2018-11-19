@@ -16,6 +16,11 @@ use App\Models\Product;
 
 class DemandsController extends Controller
 {
+
+    public function __construct(){
+        \Config::set('jwt.user' , "App\Models\Client");
+        \Config::set('auth.providers.users.model', \App\Models\Client::class);
+    }
     /**
      * Método para realizar um pedido
      *@param $request
