@@ -3,9 +3,10 @@
 <head>
 	<meta charset="utf-8" />
 	<title>{{ config('app.name', 'Laravel') }}</title>
-	<meta name="description" content="Latest updates and statistic charts">
+	<meta name="description" content="sistema de administração - Login">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta property="og:image" content="{{ asset('img/oficial-logo-email.png') }}">
 	<!--begin::Web font -->
 	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
 	<script>
@@ -42,18 +43,28 @@
 							Entrar no Admin
 						</h3>
 					</div>
-					<form class="m-login__form m-form" action="{{ url('/login') }}" method="POST">
+					<form class="m-login__form m-form" action="{{ route('login') }}" method="POST">
 						@csrf
 						<div class="form-group m-form__group">
-							<input class="form-control m-input"   type="text" placeholder="Email" name="email" autocomplete="off">
+							<input class="form-control m-input {{ $errors->has('email') ? ' is-invalid' : '' }}" type="text" placeholder="Email" name="email" value="{{ old('email') }}" autocomplete="off">
+							@if ($errors->has('email'))
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $errors->first('email') }}</strong>
+								</span>
+							@endif
 						</div>
 						<div class="form-group m-form__group">
-							<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password">
+							<input class="form-control m-input m-login__form-input--last {{ $errors->has('password') ? ' is-invalid' : '' }}" type="password" placeholder="Password" name="password">
+							@if ($errors->has('password'))
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $errors->first('password') }}</strong>
+								</span>
+							@endif
 						</div>
 						<div class="row m-login__form-sub">
 							<div class="col m--align-left m-login__form-left">
 								<label class="m-checkbox  m-checkbox--focus">
-									<input type="checkbox" name="remember">
+									<input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
 									Lembrar-me
 									<span></span>
 								</label>
@@ -80,10 +91,10 @@
 							Insira seu e-mail para redefinir sua senha:
 						</div>
 					</div>
-					<form class="m-login__form m-form" action="{{ url('/password/email') }}" method="POST">
+					<form class="m-login__form m-form" action="{{ route('password.email') }}" method="POST">
 						@csrf
 						<div class="form-group m-form__group">
-							<input class="form-control m-input" type="text" placeholder="Email" name="email" id="m_email" autocomplete="off">
+							<input class="form-control m-input" type="text" placeholder="Email" name="email" id="m_email" autocomplete="off" required>
 						</div>
 						<div class="m-login__form-action">
 							<button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn m-login__btn--primaryr">

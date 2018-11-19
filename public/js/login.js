@@ -24,6 +24,7 @@ var SnippetLogin = function() {
         }
     }
 }();
+
 jQuery(document).ready(function() {
-    SnippetLogin.init()
+    SnippetLogin.init();
 });

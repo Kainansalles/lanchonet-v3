@@ -58,7 +58,14 @@
                             <label>
                                 Razão social
                             </label>
-                            <input type="text" name="company_name" class="form-control m-input" value="<?=$estabelecimento->company_name?>">
+                            <div class="input-group m-input-group m-input-group--square">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="la la-user"></i>
+                                    </span>
+                                </div>
+                                <input type="text" name="company_name" class="form-control m-input" value="<?=$estabelecimento->company_name?>">
+                            </div>
                         </div>
                         <div class="col-lg-4">
                             <label class="">
@@ -71,11 +78,6 @@
                                 CNPJ
                             </label>
                             <div class="input-group m-input-group m-input-group--square">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="la la-user"></i>
-                                    </span>
-                                </div>
                                 <input type="text" name="cnpj" id="cnpj" class="form-control m-input" value="<?=$estabelecimento->cnpj?>">
                             </div>
                         </div>
@@ -85,7 +87,14 @@
                             <label class="">
                                 CEP
                             </label>
-                            <input type="text" name="cep" id="cep" class="form-control m-input" value="<?=$estabelecimento->cep?>">
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" name="cep" id="cep" class="form-control m-input" value="<?=$estabelecimento->cep?>">
+                                <span class="m-input-icon__icon m-input-icon__icon--right">
+                                    <span>
+                                        <i class="la la-map-marker"></i>
+                                    </span>
+                                </span>
+                            </div>
                         </div>
                         <div class="col-lg-4">
                             <label class="">
@@ -93,11 +102,6 @@
                             </label>
                             <div class="m-input-icon m-input-icon--right">
                                 <input type="text" name="neighborhood" class="form-control m-input" value="<?=$estabelecimento->neighborhood?>">
-                                <span class="m-input-icon__icon m-input-icon__icon--right">
-                                    <span>
-                                        <i class="la la-info-circle"></i>
-                                    </span>
-                                </span>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -121,11 +125,6 @@
                             </label>
                             <div class="m-input-icon m-input-icon--right">
                                 <input type="text" name="uf" class="form-control m-input" value="<?=$estabelecimento->uf?>">
-                                <span class="m-input-icon__icon m-input-icon__icon--right">
-                                    <span>
-                                        <i class="la la-bookmark-o"></i>
-                                    </span>
-                                </span>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -134,11 +133,6 @@
                             </label>
                             <div class="m-input-icon m-input-icon--right">
                                 <input type="text" name="number" class="form-control m-input" value="<?=$estabelecimento->number?>">
-                                <span class="m-input-icon__icon m-input-icon__icon--right">
-                                    <span>
-                                        <i class="la la-bookmark-o"></i>
-                                    </span>
-                                </span>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -147,11 +141,6 @@
                             </label>
                             <div class="m-input-icon m-input-icon--right">
                                 <input type="text" name="telephone" id="telephone" class="form-control m-input" value="<?=$estabelecimento->telephone?>">
-                                <span class="m-input-icon__icon m-input-icon__icon--right">
-                                    <span>
-                                        <i class="la la-bookmark-o"></i>
-                                    </span>
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -187,11 +176,6 @@
                                 Hórario fechamento
                             </label>
                             <div class="input-group m-input-group m-input-group--square">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="la la-user"></i>
-                                    </span>
-                                </div>
                                 <input type="time" name="close_hours" class="form-control m-input" value="<?=$estabelecimento->close_hours?>">
                             </div>
                         </div>
@@ -200,11 +184,6 @@
                                 Dias de funcionamento
                             </label>
                             <div class="input-group m-input-group m-input-group--square">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="la la-user"></i>
-                                    </span>
-                                </div>
                                 <input type="text" name="works_days" class="form-control m-input" value="<?=$estabelecimento->works_days?>">
                             </div>
                         </div>
