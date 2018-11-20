@@ -11,8 +11,6 @@
 |
 */
 
-
-
 Auth::routes();
 
 Route::group([
@@ -21,7 +19,6 @@ Route::group([
     Route::get('/', 'DashboardController@index');
     Route::get('/dataclients', 'DashboardController@dataClients');
     Route::get('/datademands', 'DashboardController@dataDemands');
-    Route::get('/dataproducts', 'DashboardController@dataProducts');
 });
 
 Route::group([
