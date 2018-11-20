@@ -59,7 +59,7 @@ var chartdivProducts = AmCharts.makeChart( "chartdivProducts", {
     "type": "funnel",
     "theme": "light",
     "dataLoader": {
-        "url": "/dataproducts",
+        "url": "/api/dashboard/dataproducts",
         "reload": 60,
         "noStyles": true,
     },
