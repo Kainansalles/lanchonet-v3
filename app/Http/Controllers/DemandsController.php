@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Http\Requests\DemandsRequest;
+use Tymon\JWTAuth\JWTAuth;
 
 //Models
 use App\Models\Demand;
@@ -17,9 +18,15 @@ use App\Models\Product;
 class DemandsController extends Controller
 {
 
-    public function __construct(){
+    /**
+     * @var JWTAuth
+     */
+    private $jwtAuth;
+
+    public function __construct(JWTAuth $jwtAuth){
         \Config::set('jwt.user' , "App\Models\Client");
         \Config::set('auth.providers.users.model', \App\Models\Client::class);
+        $this->jwtAuth = $jwtAuth;
     }
     /**
      * Método para realizar um pedido
@@ -49,4 +56,49 @@ class DemandsController extends Controller
                 'errors' => $e->getMessage()]);
         }
     }
+
+    /**
+     * Método para realizar pegar um pedido especifíco
+     *@param $request
+     *@return JSON
+     */
+    public function getDemand($id){
+        $demand = Demand::with(['client' ,'status_demand', 'demand_x_product', 'demand_x_product.product'])->find($id);
+
+        if($demand){
+            return response()->json([
+                'success' => true,
+                'data' => $demand,
+                'message' => "Sucesso ao encontrar dados do pedido"
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => "Falha ao encontrar dados do pedido"
+        ]);
+    }
+
+     /**
+     * Método para realizar pegar todos os pedidos do cliente autenticado
+     *@param $request
+     *@return JSON
+     */
+    public function getAllDemands(){
+        $user = $this->jwtAuth->parseToken()->authenticate();
+        $demands = Demand::with(['client' ,'status_demand', 'demand_x_product', 'demand_x_product.product'])->where('client_id', [$user->id])->get();
+        if($demands){
+            return response()->json([
+                'success' => true,
+                'data' => $demands,
+                'message' => "Sucesso ao encontrar dados dos pedidos"
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => "Falha ao encontrar dados dos pedidos"
+        ]);
+    }
+
 }
