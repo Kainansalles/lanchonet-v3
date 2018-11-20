@@ -53,4 +53,6 @@ Route::group([
     'middleware' => 'jwt.auth'
 ], function () {
     Route::post('/make', 'DemandsController@doDemand');
+    Route::get('/all', 'DemandsController@getAllDemands');
+    Route::get('/{id}', 'DemandsController@getDemand');
 });
