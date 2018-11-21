@@ -110,11 +110,6 @@
                             </label>
                             <div class="m-input-icon m-input-icon--right">
                                 <input type="text" name="street" class="form-control m-input" value="<?=$estabelecimento->street?>">
-                                <span class="m-input-icon__icon m-input-icon__icon--right">
-                                    <span>
-                                        <i class="la la-map-marker"></i>
-                                    </span>
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -166,18 +161,18 @@
                             <input type="time" name="open_hours" class="form-control m-input" value="<?=$estabelecimento->open_hours?>">
                         </div>
                         <div class="col-lg-3">
-                            <label class="">
-                                Tempo minimo de retirada
-                            </label>
-                            <input type="time" name="minutes_min_recall" class="form-control m-input" value="<?=$estabelecimento->minutes_min_recall?>">
-                        </div>
-                        <div class="col-lg-3">
                             <label>
                                 Hórario fechamento
                             </label>
                             <div class="input-group m-input-group m-input-group--square">
                                 <input type="time" name="close_hours" class="form-control m-input" value="<?=$estabelecimento->close_hours?>">
                             </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="">
+                                Tempo minimo de retirada
+                            </label>
+                            <input type="time" name="minutes_min_recall" class="form-control m-input" value="<?=$estabelecimento->minutes_min_recall?>">
                         </div>
                         <div class="col-lg-3">
                             <label>
