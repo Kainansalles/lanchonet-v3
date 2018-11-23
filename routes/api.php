@@ -56,3 +56,9 @@ Route::group([
     Route::get('/all', 'DemandsController@getAllDemands');
     Route::get('/{id}', 'DemandsController@getDemand');
 });
+
+Route::group([
+    'prefix' => 'dashboard',
+], function () {
+    Route::get('/dataproducts', 'DashboardController@dataProducts');
+});
