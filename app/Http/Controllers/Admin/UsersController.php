@@ -59,7 +59,6 @@ class UsersController extends Controller
      *@return JSON
      */
     public function newUser(UsersRequest $request){
-
         try {
             $requestData = $request->all();
             $data = [
@@ -69,7 +68,6 @@ class UsersController extends Controller
             ];
             if(User::create($data))
                 return response()->json(['success' => 'Usuário inserido com sucesso!']);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => true,
@@ -91,7 +89,7 @@ class UsersController extends Controller
 
         } catch (\Exception $e) {
             return response()->json([
-                'success' => true,
+                'success' => false,
                 'errors' => $e->getMessage()]);
         }
 

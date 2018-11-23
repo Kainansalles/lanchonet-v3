@@ -46,13 +46,15 @@ $(function(){
                    required: !0, email: true
                },
                password : {
+                   required: !0,
                    minlength : 5
                },
                password_confirm : {
+                   required: !0,
                    minlength : 5,
                    equalTo : "#password"
                }
-           }, submitHandler:function(form) {
+           }, submitHandler:function() {
                 $newuserform = new FormData($('#newuserform')[0]);
                 $.ajax({
                     type:"POST",
@@ -98,7 +100,6 @@ $(function(){
                 cancelButtonText: "Não, cancelar!"
             }).then(function(e) {
                 if(e.value){
-                    console.log(id);
                     deletarProduto(id);
                     swal("Bom trabalho!", "Produto deletado com sucesso!", "success");
                 }
