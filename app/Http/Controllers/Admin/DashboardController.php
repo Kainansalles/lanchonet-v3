@@ -57,17 +57,4 @@ class DashboardController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * Função responsável por retornar Query para criação de Dashboard (Produtos)
-     *
-     */
-    public function dataProducts(){
-        $data = DemandxProduct::select(\DB::raw('products.name as title, count(*) as value'))
-            ->join('products', 'demand_x_products.product_id', '=', 'products.id')
-            ->groupBy('products.name')
-            ->orderBy('value', 'DESC')
-            ->limit(3)
-            ->get();
-        return response()->json($data);
-    }
 }
