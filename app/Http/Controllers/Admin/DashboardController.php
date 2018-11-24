@@ -56,4 +56,5 @@ class DashboardController extends Controller
         ->get();
         return response()->json($data);
     }
+
 }
