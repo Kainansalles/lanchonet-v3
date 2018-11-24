@@ -3,6 +3,7 @@ $(function(){
         $('#table_demands').DataTable().ajax.reload();
     }, 60000 );
 
+
     $("#filter_status_demand").select2();
 
     $('body').on('change', '#filter_status_demand',function(){
