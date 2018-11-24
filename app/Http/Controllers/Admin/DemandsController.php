@@ -34,7 +34,10 @@ class DemandsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        return view('demands')->with('statusDemands', StatusDemand::get(['id', 'initials', 'description']));
+        return view('demands')->with([
+            'statusDemands' => StatusDemand::get(['id', 'initials', 'description']),
+            'data' => $this->getDatalistDemands()
+        ]);
     }
 
     /**
@@ -51,6 +54,32 @@ class DemandsController extends Controller
                 <button class='btn btn-danger cancel_demand' id='" . $model->id ."'><span class='fa fa-trash'></span></button>";
             })
             ->toJson();
+    }
+
+    /**
+     * Método responsavel por retornar os 4 proximos pedidos
+     *@return JSON
+     */
+    public function getListDemands(){
+        $data = $this->getDatalistDemands();
+        if(!empty($data)){
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+
+    private function getDatalistDemands(){
+        return Demand::with(['client' ,'status_demand', 'demand_x_product', 'demand_x_product.product'])
+        ->whereIn('status_demand_id', [1,2])
+        ->orderBy('hour_recall', 'DESC')
+        ->limit(4)
+        ->get();
     }
 
     /**
