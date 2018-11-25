@@ -35,8 +35,8 @@ class DemandsController extends Controller
      */
     public function index(Request $request){
         return view('demands')->with([
-            'statusDemands' => StatusDemand::get(['id', 'initials', 'description']),
-            'demands' => $this->getDatalistDemands()
+            'statusDemands' => StatusDemand::get(['id', 'initials', 'description'])
+            //'demand' => $this->getDatalistDemands()
         ]);
     }
 
@@ -61,11 +61,12 @@ class DemandsController extends Controller
      *@return JSON
      */
     public function getListDemands(){
-        $demand = $this->getDatalistDemands();
-        if(!empty($demand)){
+        $demands = $this->getDatalistDemands();
+        if(!empty($demands)){
             return response()->json([
                 'success' => true,
-                'data' => $demand
+                'data' => $demands,
+                'view' => view('layouts.demands-list')->with(['demands' => $demands ])->render(),
             ]);
         }
 

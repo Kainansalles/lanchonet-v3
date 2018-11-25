@@ -4,6 +4,16 @@ $(function(){
     }, 60000 );
 
 
+    $.getJSON( "/admin/pedidos/getlist", function( data ) {
+        $('#demands-list').html(data.view);
+    });
+
+    $("#m_aside_left_minimize_toggle").length && (o = new mToggle("m_aside_left_minimize_toggle", {
+        target: "body",
+        targetState: "m-brand--minimize m-aside-left--minimize",
+        togglerState: "m-brand__toggler--active"
+    }));
+
     $("#filter_status_demand").select2();
 
     $('body').on('change', '#filter_status_demand',function(){
@@ -25,6 +35,7 @@ $(function(){
         mApp.unblock("#content-table-demands");
         renderDemand();
         optionsDemand();
+
         $('body').on('click', '#status_delivery',function(){
             $(this).addClass('active');
             $('#table_demands').DataTable().ajax.url( '/admin/pedidos/all').load();
