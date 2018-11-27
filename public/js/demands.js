@@ -1,4 +1,5 @@
 $(function(){
+    $('body').addClass('m-brand--minimize m-aside-left--minimize');
     setInterval(function() {
         $('#table_demands').DataTable().ajax.reload();
     }, 60000 );
@@ -7,12 +8,6 @@ $(function(){
     $.getJSON( "/admin/pedidos/getlist", function( data ) {
         $('#demands-list').html(data.view);
     });
-
-    $("#m_aside_left_minimize_toggle").length && (o = new mToggle("m_aside_left_minimize_toggle", {
-        target: "body",
-        targetState: "m-brand--minimize m-aside-left--minimize",
-        togglerState: "m-brand__toggler--active"
-    }));
 
     $("#filter_status_demand").select2();
 

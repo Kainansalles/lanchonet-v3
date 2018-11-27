@@ -2,6 +2,7 @@
 
 @push('lanchonet-css')
     <link href="{{ asset('css/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+{{--    <link href="{{ asset('css/jquery.scrolling-tabs.css') }}" rel="stylesheet" type="text/css" />--}}
     <link href="{{ asset('css/lanchonet.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
@@ -102,5 +103,6 @@
     {{--    <script src="{{ asset('js/bootstrap-notify.js') }}" type="text/javascript"></script> --}}
     {{--<script src="{{ asset('js/bootstrap-confirmation.min.js') }}"></script>--}}
     {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>--}}
+{{--    <script src="{{ asset('js/jquery.scrolling-tabs.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('js/demands.js') }}" type="text/javascript"></script>
 @endpush

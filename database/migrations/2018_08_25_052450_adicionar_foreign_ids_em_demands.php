@@ -18,7 +18,7 @@ class AdicionarForeignIdsEmDemands extends Migration
             $table->foreign('store_id')->references('id')->on('stores');
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->integer('status_demand_id')->unsigned()->default(2);
+            $table->integer('status_demand_id')->unsigned()->default(4);
             $table->foreign('status_demand_id')->references('id')->on('status_demands');
         });
     }

@@ -45,7 +45,7 @@ class DemandsController extends Controller
      *@return JSON
      */
     public function getAllDemands(){
-        $model = Demand::with(['client' ,'status_demand'])->whereIn('status_demand_id', [1,2])->get();
+        $model = Demand::with(['client' ,'status_demand'])->whereIn('status_demand_id', [4])->get();
         return DataTables::collection($model)
             ->addColumn('action', function ($model) {
                 return "
@@ -77,7 +77,7 @@ class DemandsController extends Controller
 
     private function getDatalistDemands(){
         return Demand::with(['client' ,'status_demand', 'demand_x_product', 'demand_x_product.product'])
-        ->whereIn('status_demand_id', [1,2])
+        ->whereIn('status_demand_id', [4])
         ->orderBy('hour_recall', 'DESC')
         ->limit(4)
         ->get();
@@ -156,7 +156,7 @@ class DemandsController extends Controller
             $demand = Demand::find($id);
 
             if($demand){
-                $demand->status_demand_id = 4;
+                $demand->status_demand_id = 5;
                 $demand->save();
                 return response()->json([
                     'success' => true
