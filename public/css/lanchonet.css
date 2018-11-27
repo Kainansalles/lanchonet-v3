@@ -43,3 +43,8 @@ table#table_demands.fl-datatable > tbody > tr:first-child{
 table#table_demands.fl-datatable > tbody h3.popover-title{
     color: #333333;
 }
+
+#demands-list th,
+#demands-list td{
+    text-align: center;
+}

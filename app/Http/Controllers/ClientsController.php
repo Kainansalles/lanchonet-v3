@@ -8,22 +8,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
-use Config;
 use DB;
-use JWTAuth;
+use Tymon\JWTAuth\JWTAuth;
 
 // Models
 use App\Models\Client;
-
-use App\Mail\RecuperarSenha;
 use App\Helpers\Helper;
 
 class ClientsController extends Controller{
+
+    /**
+     * @var JWTAuth
+     */
+    private $jwtAuth;
+
+    public function __construct(JWTAuth $jwtAuth){
+        \Config::set('jwt.user' , "App\Models\Client");
+        \Config::set('auth.providers.users.model', \App\Models\Client::class);
+        $this->jwtAuth = $jwtAuth;
+    }
 
     /**
      * Método responsavel por realizar a criação de um novo usuáro
@@ -77,7 +82,6 @@ class ClientsController extends Controller{
      */
     public function editUser(Request $request){
         $rules = [
-            'id' => 'required|integer|exists:clients,id',
             'nickname' => 'string',
             'telephone' => 'numeric',
             'dt_birth' => 'date',
@@ -90,7 +94,8 @@ class ClientsController extends Controller{
             if ($validator->passes()) {
                 DB::beginTransaction();
                 try {
-                    $cliente = Client::find($data['id']);
+                    $user = $this->jwtAuth->parseToken()->authenticate();
+                    $cliente = Client::find($user->id);
                     if(isset($cliente)){
                         $cliente->fill($data);
                         $cliente->save();
@@ -98,7 +103,7 @@ class ClientsController extends Controller{
                     DB::commit();
                     return response()->json([
                         'success' => true,
-                        'message' => 'Successfully edited user data']);
+                        'message' => 'Sucesso ao editar dados do usuário']);
 
                 } catch (\Exception $e) {
                     DB::rollback();
@@ -123,7 +128,6 @@ class ClientsController extends Controller{
      */
     public function editPW(Request $request){
         $rules = [
-            'id' => 'required|integer|exists:clients,id',
             'old_password' => 'required',
             'password' => 'required',
         ];
@@ -134,7 +138,8 @@ class ClientsController extends Controller{
             if ($validator->passes()) {
                 DB::beginTransaction();
                 try {
-                    $cliente = Client::find($data['id']);
+                    $user = $this->jwtAuth->parseToken()->authenticate();
+                    $cliente = Client::find($user->id);
                     if(isset($cliente)){
                         if(Hash::check($data['old_password'], $cliente->password)) {
                             unset($data['old_password']);
