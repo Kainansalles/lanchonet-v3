@@ -7,6 +7,7 @@ $(function(){
 
     $.getJSON( "/admin/pedidos/getlist", function( data ) {
         $('#demands-list').html(data.view);
+        //new mPortlet('.portlets-demands');
     });
 
     $("#filter_status_demand").select2();

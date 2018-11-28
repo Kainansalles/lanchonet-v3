@@ -53,7 +53,7 @@
         @foreach($demands as $demand)
             <div class="col-lg-6">
                 <!--begin::Portlet-->
-                <div class="m-portlet m-portlet--accent m-portlet--head-solid-bg m-portlet--head-sm" m-portlet="true" id="m_portlet_tools_1">
+                <div class="m-portlet m-portlet--accent m-portlet--head-solid-bg m-portlet--head-sm portlets-demands" m-portlet="true" id="portlets-demands-{{$demand->id}}">
                     <div class="m-portlet__head" style="background-color: #282a3c; border-color:#282a3c">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
@@ -66,16 +66,38 @@
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
-                            <ul class="m-portlet__nav">
-                                <li class="m-portlet__nav-item">
-                                    <button type="button" class="btn m-btn--pill m-btn--air btn-danger cancel_demand" id="{{$demand->id}}">Cancelar pedido</button>
-                                </li>
-                                <li class="m-portlet__nav-item">
-                                    <div class="m-spinner m-spinner--warning m-spinner--lg"></div>
-                                </li>
+                            {{--<ul class="m-portlet__nav">--}}
+                                {{--<li class="m-portlet__nav-item">--}}
+                                    {{--<button type="button" class="btn m-btn--pill m-btn--air btn-danger cancel_demand" id="{{$demand->id}}">Cancelar pedido</button>--}}
+                                {{--</li>--}}
+                                {{--<li class="m-portlet__nav-item">--}}
+                                    {{--<div class="m-spinner m-spinner--warning m-spinner--lg"></div>--}}
+                                {{--</li>--}}
                                 {{--<li class="m-portlet__nav-item">--}}
                                     {{--<div class="m-spinner m-spinner--success m-spinner--lg"></div>--}}
                                 {{--</li>--}}
+                            {{--</ul>--}}
+                            <ul class="m-portlet__nav">
+                                <li class="m-portlet__nav-item">
+                                    <a href="#"  m-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon">
+                                        <i class="la la-angle-down"></i>
+                                    </a>
+                                </li>
+                                <li class="m-portlet__nav-item">
+                                    <a href="#"  m-portlet-tool="reload" class="m-portlet__nav-link m-portlet__nav-link--icon">
+                                        <i class="la la-refresh"></i>
+                                    </a>
+                                </li>
+                                <li class="m-portlet__nav-item">
+                                    <a href="#"  m-portlet-tool="fullscreen" class="m-portlet__nav-link m-portlet__nav-link--icon">
+                                        <i class="la la-expand"></i>
+                                    </a>
+                                </li>
+                                <li class="m-portlet__nav-item">
+                                    <a href="#" m-portlet-tool="remove" class="m-portlet__nav-link m-portlet__nav-link--icon">
+                                        <i class="la la-close"></i>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -128,6 +150,11 @@
                     </div>
                 </div>
             </div>
+            <script>
+                // $(document).ready(function(){
+                    new mPortlet('portlets-demands-{{$demand->id}}')
+                // });
+            </script>
         @endforeach
     </div>
 </div>
