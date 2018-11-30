@@ -124,6 +124,50 @@ class DemandsController extends Controller
     }
 
     /**
+     * Método colocar pedido em preparo
+     *@param $id
+     *@return json
+     */
+    public function preparingDemand($id){
+        if(is_numeric($id)){
+            $demand = Demand::find($id);
+            if($demand){
+                $demand->status_demand_id = 1;
+                $demand->save();
+                return response()->json([
+                    'success' => true
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+
+    /**
+     * Método colocar pedido em p/ retirada
+     *@param $id
+     *@return json
+     */
+    public function withdrawalDemand($id){
+        if(is_numeric($id)){
+            $demand = Demand::find($id);
+            if($demand){
+                $demand->status_demand_id = 2;
+                $demand->save();
+                return response()->json([
+                    'success' => true
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+
+    /**
      * Método para confirmar pedido (entregue)
      *@param $id
      *@return json

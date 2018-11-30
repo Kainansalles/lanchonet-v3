@@ -30,6 +30,8 @@ Route::group([
     Route::get('consultdemand/{id}', 'DemandsController@consultDemands');
     Route::get('cancel/{id}', 'DemandsController@cancelDemand');
     Route::get('confirm/{id}', 'DemandsController@confirmDemand');
+    Route::get('prepear/{id}', 'DemandsController@preparingDemand');
+    Route::get('withdrawal/{id}', 'DemandsController@withdrawalDemand');
     Route::get('/getlist', 'DemandsController@getListDemands');
     Route::get('/{id}', 'DemandsController@getDemand');
 });

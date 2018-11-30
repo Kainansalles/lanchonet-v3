@@ -1,14 +1,10 @@
 $(function(){
     $('body').addClass('m-brand--minimize m-aside-left--minimize');
+    panelDemand();
     setInterval(function() {
         $('#table_demands').DataTable().ajax.reload();
-    }, 60000 );
-
-
-    $.getJSON( "/admin/pedidos/getlist", function( data ) {
-        $('#demands-list').html(data.view);
-        //new mPortlet('.portlets-demands');
-    });
+        panelDemand();
+    }, 5000 );
 
     $("#filter_status_demand").select2();
 
@@ -69,6 +65,20 @@ $(function(){
         }
     });
 
+    // Método para renderizar painel de demanda
+    function panelDemand(){
+        $.getJSON( "/admin/pedidos/getlist", function( data ) {
+            $('#demands-list').html(data.view);
+            $('body').on('click', '.retirada_demand',function(){
+                sendRequest('/admin/pedidos/prepear/', $(this).attr('id'));
+            });
+            $('body').on('click', '.preparo_demand',function(){
+                sendRequest('/admin/pedidos/withdrawal/', $(this).attr('id'));
+            });
+            cancelDemand();
+        });
+    }
+
     // Método para renderizar demanda
     function renderDemand(){
         $('body').off('click').on('click', '.view_demand', function(){
@@ -104,23 +114,7 @@ $(function(){
 
             });
 
-            $('body').on('click', '.cancel_demand', function(){
-                var id = $(this).attr('id');
-                swal({
-                    title: "Você tem certeza?",
-                    text: "Uma vez cancelado, você não poderá recuperar este pedido!",
-                    type: "error",
-                    showCancelButton: !0,
-                    confirmButtonText: "Sim!",
-                    cancelButtonText: "Não!"
-                }).then(function(e) {
-                    if(e.value){
-                        sendRequest('/admin/pedidos/cancel/', id);
-                        swal("Bom trabalho!", "Pedido foi cancelado!", "success");
-                    }
-                });
-
-            });
+            cancelDemand();
 
             $('body').on('click', '.confirm_demand_product', function(){
                 sendRequest('/admin/pedidos/confirm/', $('#productID').val());
@@ -133,6 +127,26 @@ $(function(){
             });
 
         }
+    }
+
+    function cancelDemand(){
+        $('body').on('click', '.cancel_demand', function(){
+            var id = $(this).attr('id');
+            swal({
+                title: "Você tem certeza?",
+                text: "Uma vez cancelado, você não poderá recuperar este pedido!",
+                type: "error",
+                showCancelButton: !0,
+                confirmButtonText: "Sim!",
+                cancelButtonText: "Não!"
+            }).then(function(e) {
+                if(e.value){
+                    sendRequest('/admin/pedidos/cancel/', id);
+                    swal("Bom trabalho!", "Pedido foi cancelado!", "success");
+                }
+            });
+
+        });
     }
 
     // Método para enviar requisiçao
