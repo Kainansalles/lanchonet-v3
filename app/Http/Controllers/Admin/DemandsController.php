@@ -60,8 +60,8 @@ class DemandsController extends Controller
      * Método responsavel por retornar os 4 proximos pedidos
      *@return JSON
      */
-    public function getListDemands(){
-        $demands = $this->getDatalistDemands();
+    public function getListDemands($id){
+        $demands = $this->getDatalistDemands($id);
         if(!empty($demands)){
             return response()->json([
                 'success' => true,
@@ -75,9 +75,9 @@ class DemandsController extends Controller
         ]);
     }
 
-    private function getDatalistDemands(){
+    private function getDatalistDemands($id){
         return Demand::with(['client' ,'status_demand', 'demand_x_product', 'demand_x_product.product'])
-        ->whereIn('status_demand_id', [4])
+        ->whereIn('status_demand_id', [$id])
         ->orderBy('hour_recall', 'DESC')
         ->limit(4)
         ->get();

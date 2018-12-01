@@ -1,10 +1,10 @@
 $(function(){
     $('body').addClass('m-brand--minimize m-aside-left--minimize');
-    panelDemand();
     setInterval(function() {
         $('#table_demands').DataTable().ajax.reload();
         panelDemand();
     }, 5000 );
+    panelDemand();
 
     $("#filter_status_demand").select2();
 
@@ -67,8 +67,16 @@ $(function(){
 
     // Método para renderizar painel de demanda
     function panelDemand(){
-        $.getJSON( "/admin/pedidos/getlist", function( data ) {
+        var id = $('#current-demand').val();
+        $.getJSON( "/admin/pedidos/getlist/" + id, function( data ) {
             $('#demands-list').html(data.view);
+            $('#demands-list .nav-item').click(function(){
+                $('#current-demand').val($(this).attr('data-status-id'));
+            });
+            $("#demands-list .nav-item").each(function() {
+                $("#demands-list .nav-link[data-status-id='" + id + "']").addClass('active show');
+                $("#demands-list .nav-link[data-status-id='" + id + "']").trigger('click');
+            });
             $('body').on('click', '.retirada_demand',function(){
                 sendRequest('/admin/pedidos/prepear/', $(this).attr('id'));
             });

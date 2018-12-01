@@ -35,8 +35,8 @@
             </div>
         </div>
     </div>
-
-    <!-- Aqui vem a parada-->
+    
+    <input id="current-demand" type="hidden" value="4"/>
     <div id="demands-list"></div>
 
     <!-- END: Subheader -->
