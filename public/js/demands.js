@@ -3,7 +3,7 @@ $(function(){
     setInterval(function() {
         $('#table_demands').DataTable().ajax.reload();
         panelDemand();
-    }, 5000 );
+    }, 600000 );
     panelDemand();
 
     $("#filter_status_demand").select2();
@@ -70,12 +70,9 @@ $(function(){
         var id = $('#current-demand').val();
         $.getJSON( "/admin/pedidos/getlist/" + id, function( data ) {
             $('#demands-list').html(data.view);
-            $('#demands-list .nav-item').click(function(){
-                $('#current-demand').val($(this).attr('data-status-id'));
-            });
             $("#demands-list .nav-item").each(function() {
-                $("#demands-list .nav-link[data-status-id='" + id + "']").addClass('active show');
-                $("#demands-list .nav-link[data-status-id='" + id + "']").trigger('click');
+                //$("#demands-list .nav-link[data-status-id='" + id + "']").addClass('active show');
+                $("#demands-list .nav-link[data-status-id='" + id + "']").click();
             });
             $('body').on('click', '.retirada_demand',function(){
                 sendRequest('/admin/pedidos/prepear/', $(this).attr('id'));
@@ -156,18 +153,4 @@ $(function(){
 
         });
     }
-
-    // Método para enviar requisiçao
-    function sendRequest(url, id){
-        $.ajax({
-            url: url + id,
-            dataType: 'json',
-            success: function(data){
-                if(data.hasOwnProperty("success")){
-                    $('#table_demands').DataTable().ajax.reload();
-                }
-            }
-        });
-    }
-
 });
