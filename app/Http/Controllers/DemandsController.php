@@ -86,7 +86,7 @@ class DemandsController extends Controller
      */
     public function getAllDemands(){
         $user = $this->jwtAuth->parseToken()->authenticate();
-        $demands = Demand::with(['client' ,'status_demand', 'demand_x_product', 'demand_x_product.product'])->where('client_id', [$user->id])->paginate(5);
+        $demands = Demand::with(['client' ,'status_demand', 'demand_x_product', 'demand_x_product.product'])->where('client_id', [$user->id])->paginate(10);
         if($demands){
             return response()->json([
                 'success' => true,

@@ -45,7 +45,7 @@ class DemandsController extends Controller
      *@return JSON
      */
     public function getAllDemands(){
-        $model = Demand::with(['client' ,'status_demand'])->whereIn('status_demand_id', [1,2])->get();
+        $model = Demand::with(['client' ,'status_demand'])->whereIn('status_demand_id', [4])->get();
         return DataTables::collection($model)
             ->addColumn('action', function ($model) {
                 return "
@@ -60,8 +60,8 @@ class DemandsController extends Controller
      * Método responsavel por retornar os 4 proximos pedidos
      *@return JSON
      */
-    public function getListDemands(){
-        $demands = $this->getDatalistDemands();
+    public function getListDemands($id){
+        $demands = $this->getDatalistDemands($id);
         if(!empty($demands)){
             return response()->json([
                 'success' => true,
@@ -75,9 +75,9 @@ class DemandsController extends Controller
         ]);
     }
 
-    private function getDatalistDemands(){
+    private function getDatalistDemands($id){
         return Demand::with(['client' ,'status_demand', 'demand_x_product', 'demand_x_product.product'])
-        ->whereIn('status_demand_id', [1,2])
+        ->whereIn('status_demand_id', [$id])
         ->orderBy('hour_recall', 'DESC')
         ->limit(4)
         ->get();
@@ -124,6 +124,50 @@ class DemandsController extends Controller
     }
 
     /**
+     * Método colocar pedido em preparo
+     *@param $id
+     *@return json
+     */
+    public function preparingDemand($id){
+        if(is_numeric($id)){
+            $demand = Demand::find($id);
+            if($demand){
+                $demand->status_demand_id = 1;
+                $demand->save();
+                return response()->json([
+                    'success' => true
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+
+    /**
+     * Método colocar pedido em p/ retirada
+     *@param $id
+     *@return json
+     */
+    public function withdrawalDemand($id){
+        if(is_numeric($id)){
+            $demand = Demand::find($id);
+            if($demand){
+                $demand->status_demand_id = 2;
+                $demand->save();
+                return response()->json([
+                    'success' => true
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+
+    /**
      * Método para confirmar pedido (entregue)
      *@param $id
      *@return json
@@ -152,6 +196,30 @@ class DemandsController extends Controller
      *@return json
      */
     public function cancelDemand($id){
+        if(is_numeric($id)){
+            $demand = Demand::find($id);
+
+            if($demand){
+                $demand->status_demand_id = 5;
+                $demand->save();
+                return response()->json([
+                    'success' => true
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+
+
+    /**
+     * Método para voltar ao pedido como pago
+     *@param $id
+     *@return json
+     */
+    public function paidDemand($id){
         if(is_numeric($id)){
             $demand = Demand::find($id);
 

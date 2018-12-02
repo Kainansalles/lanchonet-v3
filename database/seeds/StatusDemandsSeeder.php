@@ -12,18 +12,23 @@ class StatusDemandsSeeder extends Seeder
     public function run()
     {
         DB::table('status_demands')->insert([
-            'initials' => 'P',
-            'description' => 'Pd. pagamento',
+            'initials' => 'E',
+            'description' => 'Em preparo',
             'allows_low' => 1
         ]);
         DB::table('status_demands')->insert([
-            'initials' => 'A',
-            'description' => 'Aguardando pgto',
+            'initials' => 'P',
+            'description' => 'Pronto p/ retirada',
             'allows_low' => 1
         ]);
         DB::table('status_demands')->insert([
             'initials' => 'F',
             'description' => 'Finalizado'
+        ]);
+        DB::table('status_demands')->insert([
+            'initials' => 'P',
+            'description' => 'Pago',
+            'allows_low' => 1
         ]);
         DB::table('status_demands')->insert([
             'initials' => 'C',

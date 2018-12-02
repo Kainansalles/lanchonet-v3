@@ -11,6 +11,16 @@
 |
 */
 
+Route::get('download/app', function(){
+    //PDF file is stored under project/public/download/lanchonet-app.apk
+    $file= public_path(). "/download/lanchonet-app.apk";
+     $headers = [
+        'Content-Type'=>'application/vnd.android.package-archive',
+        'Content-Disposition'=> 'attachment; filename="android.apk"',
+    ];
+     return Response::download($file, 'lanchonet-app.apk', $headers);
+});
+
 Auth::routes();
 
 Route::group([
@@ -30,7 +40,10 @@ Route::group([
     Route::get('consultdemand/{id}', 'DemandsController@consultDemands');
     Route::get('cancel/{id}', 'DemandsController@cancelDemand');
     Route::get('confirm/{id}', 'DemandsController@confirmDemand');
-    Route::get('/getlist', 'DemandsController@getListDemands');
+    Route::get('prepear/{id}', 'DemandsController@preparingDemand');
+    Route::get('withdrawal/{id}', 'DemandsController@withdrawalDemand');
+    Route::get('/paid/{id}', 'DemandsController@paidDemand');
+    Route::get('/getlist/{id}', 'DemandsController@getListDemands');
     Route::get('/{id}', 'DemandsController@getDemand');
 });
 

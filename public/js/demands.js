@@ -1,18 +1,10 @@
 $(function(){
+    $('body').addClass('m-brand--minimize m-aside-left--minimize');
     setInterval(function() {
         $('#table_demands').DataTable().ajax.reload();
-    }, 60000 );
-
-
-    $.getJSON( "/admin/pedidos/getlist", function( data ) {
-        $('#demands-list').html(data.view);
-    });
-
-    $("#m_aside_left_minimize_toggle").length && (o = new mToggle("m_aside_left_minimize_toggle", {
-        target: "body",
-        targetState: "m-brand--minimize m-aside-left--minimize",
-        togglerState: "m-brand__toggler--active"
-    }));
+        panelDemand();
+    }, 600000 );
+    panelDemand();
 
     $("#filter_status_demand").select2();
 
@@ -39,11 +31,6 @@ $(function(){
         $('body').on('click', '#status_delivery',function(){
             $(this).addClass('active');
             $('#table_demands').DataTable().ajax.url( '/admin/pedidos/all').load();
-        });
-        $("body").ready(function(){
-            if($('#status_delivery').hasClass('active')){
-                $('#table_demands tbody tr:first td:last-child').append("<div class='m-spinner m-spinner--warning m-spinner--lg'></div>");
-            }
         });
     })
     .DataTable({
@@ -72,6 +59,25 @@ $(function(){
             "url": document.location.origin+ "/js/pt-br-translations-datatable.json"
         }
     });
+
+    // Método para renderizar painel de demanda
+    function panelDemand(){
+        var id = $('#current-demand').val();
+        $.getJSON( "/admin/pedidos/getlist/" + id, function( data ) {
+            $('#demands-list').html(data.view);
+            $("#demands-list .nav-item").each(function() {
+                $("#demands-list .nav-link[data-status-id='" + id + "']").click();
+                return false;
+            });
+            $('body').on('click', '.retirada_demand',function(){
+                sendRequest('/admin/pedidos/prepear/', $(this).attr('id'));
+            });
+            $('body').on('click', '.preparo_demand',function(){
+                sendRequest('/admin/pedidos/withdrawal/', $(this).attr('id'));
+            });
+            //cancelDemand();
+        });
+    }
 
     // Método para renderizar demanda
     function renderDemand(){
@@ -108,23 +114,7 @@ $(function(){
 
             });
 
-            $('body').on('click', '.cancel_demand', function(){
-                var id = $(this).attr('id');
-                swal({
-                    title: "Você tem certeza?",
-                    text: "Uma vez cancelado, você não poderá recuperar este pedido!",
-                    type: "error",
-                    showCancelButton: !0,
-                    confirmButtonText: "Sim!",
-                    cancelButtonText: "Não!"
-                }).then(function(e) {
-                    if(e.value){
-                        sendRequest('/admin/pedidos/cancel/', id);
-                        swal("Bom trabalho!", "Pedido foi cancelado!", "success");
-                    }
-                });
-
-            });
+            cancelDemand();
 
             $('body').on('click', '.confirm_demand_product', function(){
                 sendRequest('/admin/pedidos/confirm/', $('#productID').val());
@@ -139,17 +129,23 @@ $(function(){
         }
     }
 
-    // Método para enviar requisiçao
-    function sendRequest(url, id){
-        $.ajax({
-            url: url + id,
-            dataType: 'json',
-            success: function(data){
-                if(data.hasOwnProperty("success")){
-                    $('#table_demands').DataTable().ajax.reload();
+    function cancelDemand(){
+        $('body').on('click', '.cancel_demand', function(){
+            var id = $(this).attr('id');
+            swal({
+                title: "Você tem certeza?",
+                text: "Uma vez cancelado, você não poderá recuperar este pedido!",
+                type: "error",
+                showCancelButton: !0,
+                confirmButtonText: "Sim!",
+                cancelButtonText: "Não!"
+            }).then(function(e) {
+                if(e.value){
+                    sendRequest('/admin/pedidos/cancel/', id);
+                    swal("Bom trabalho!", "Pedido foi cancelado!", "success");
                 }
-            }
+            });
+
         });
     }
-
 });
