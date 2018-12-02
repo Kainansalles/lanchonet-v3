@@ -6,26 +6,39 @@ $(function(){
 
     function getList(){
         var id = $('#current-demand').val();
-        $.getJSON( "/admin/pedidos/getlist/" + id, function( data ) {
-            $('#demands-list').html(data.view);
-            $("#demands-list .nav-item").each(function(k, e) {
-                $("#demands-list .nav-link[data-status-id='" + id + "']").click();
-                return false;
-            });
+        $.ajax({
+            url:'/admin/pedidos/getlist/' + id,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            beforeSend: function() {
+                mApp.block("#demands-list", {
+                    overlayColor: "#000000",
+                    type: "loader",
+                    state: "primary",
+                    message: "Processando.."
+                });
+            },
+            success: function(data){
+                mApp.unblock("#demands-list");
+                $('#demands-list').html(data.view);
+                $("#demands-list .nav-item").each(function() {
+                    $("#demands-list .nav-link[data-status-id='" + id + "']").click();
+                    return false;
+                });
+            }
         });
     }
 
     $('.preparo_demand').click(function(){
-        sendRequest('/admin/pedidos/prepear/', $(this).attr('id'));
-        getList();
+        sendRequestDemand('/admin/pedidos/prepear/', $(this).attr('id'), $(this));
     });
 
     $('.retirada_demand').click(function(){
-        sendRequest('/admin/pedidos/withdrawal/', $(this).attr('id'));
-        getList();
+        sendRequestDemand('/admin/pedidos/withdrawal/', $(this).attr('id'), $(this));
     });
 
-    $('.confirm_demandd').click(function(){
+    $('.confirm_demand_panel').click(function(){
         var id = $(this).attr('id');
         swal({
             title: "Você tem certeza?",
@@ -36,9 +49,8 @@ $(function(){
             cancelButtonText: "Não, cancelar!"
         }).then(function(e) {
             if(e.value){
-                sendRequest('/admin/pedidos/confirm/', id);
+                sendRequestDemand('/admin/pedidos/confirm/', id, $(this));
                 swal("Bom trabalho!", "Pedido foi entregue com sucesso!", "success");
-                getList();
             }
         });
     });
@@ -54,9 +66,8 @@ $(function(){
             cancelButtonText: "Não!"
         }).then(function(e) {
             if(e.value){
-                sendRequest('/admin/pedidos/cancel/', id);
-                swal("Bom trabalho!", "Pedido foi cancelado!", "success");
-                getList();
+                sendRequestDemand('/admin/pedidos/cancel/', id, $(this));
+                swal("Bom trabalho!", "Pedido foi cancelado!", "success");                
             }
         });
     });
@@ -74,13 +85,34 @@ $(function(){
         }).then(function(e) {
             if(e.value){
                 if(data_status_id == 4){
-                    sendRequest('/admin/pedidos/paid/', id);
+                    sendRequestDemand('/admin/pedidos/paid/', id, $(this));
                 }else{
-                    sendRequest('/admin/pedidos/prepear/', id);
+                    sendRequestDemand('/admin/pedidos/prepear/', id, $(this));
                 }
-                swal("Bom trabalho!", "Pedido foi retornado ao status anterior!", "success");
-                getList();
+                swal("Bom trabalho!", "Pedido foi retornado ao status anterior!", "success");                
             }
         });
     });
+
+    // Método para enviar requisiçao
+    function sendRequestDemand(url, id, e){
+        $.ajax({
+            url: url + id,
+            dataType: 'json',
+            beforeSend: function() {
+               $(e).addClass('m-loader m-loader--light m-loader--right');
+               $(e).prop("disabled",true);
+            },
+            success: function(data){
+                if(data.success){
+                    $(e).removeClass('m-loader m-loader--light m-loader--right');
+                    $(e).prop("disabled",false);
+                    return true;
+                }
+            },
+            complete: function(){
+                getList();
+            }
+        });
+    }
 });

@@ -17,6 +17,9 @@
                     <li class="nav-item">
                         <a class="nav-link" data-status-id="4" data-toggle="tab" href="#m_tabs_5_1">
                             A fazer
+                            @if ($totalPago > 0)
+                                <span class="m-badge m-badge--danger" style="float: right;">{{$totalPago}}</span>
+                            @endif
                         </a>
                     </li>
                     <li class="nav-item">
@@ -313,7 +316,7 @@
                                                 <a href="#" class="btn btn-metal m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--outline-2x m-btn--pill m-btn--air return_demand" data-status-id="1" id="{{$demand->id}}">
                                                     <i class="fa fa-rotate-left"></i>
                                                 </a>
-                                                <button type="button" class="btn m-btn--pill m-btn--air btn-primary confirm_demand" id="{{$demand->id}}">Finalizar</button>
+                                                <button type="button" class="btn m-btn--pill m-btn--air btn-primary confirm_demand_panel" id="{{$demand->id}}">Finalizar</button>
                                                 <button type="button" class="btn m-btn--pill m-btn--air btn-danger cancel_demand_panel" id="{{$demand->id}}">Cancelar</button>
                                             </div>
                                             <div class="col-md-3">

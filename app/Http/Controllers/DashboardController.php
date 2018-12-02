@@ -18,7 +18,7 @@ class DashboardController extends Controller
      *
      */
     public function dataProducts(){
-        $data = DemandxProduct::select(\DB::raw('products.name as title, count(*) as value'))
+        $data = DemandxProduct::select(\DB::raw('products.name as title, count(*) as value, products.url_image, products.description, products.price_sale'))
             ->join('products', 'demand_x_products.product_id', '=', 'products.id')
             ->groupBy('products.name')
             ->orderBy('value', 'DESC')

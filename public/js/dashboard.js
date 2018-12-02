@@ -1,84 +1,83 @@
-var chart = AmCharts.makeChart("chartdivClients", {
-    "theme": "light",
-    "type": "serial",
-    "startDuration": 1,
-    "dataDateFormat": "YYYY-MM",
-    "dataLoader": {
-        "url": "/dataclients",
-        "reload": 60,
-        "noStyles": true,
-    },
-    "graphs": [{
-        "balloonText": "[[category]]: <b>[[value]]</b>",
-        "colorField": "color",
-        "fillAlphas": 0.85,
-        "lineAlpha": 0.1,
-        "type": "column",
-        "topRadius":1,
-        "valueField": "visits"
-    }],
-    "depth3D": 20,
-    "angle": 30,
-    "chartCursor": {
-        "categoryBalloonEnabled": false,
-        "cursorAlpha": 0,
-        "zoomable": false
-    },
-    "categoryField": "country",
-    "categoryAxis": {
-        "gridPosition": "start",
-        "labelRotation": 90
-    },
-    "export": {
-        "enabled": true
-        }
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
 
-});
+// Create chart instance
+var chart = am4core.create("chartdivDemandsxProducts", am4charts.XYChart);
+chart.scrollbarX = new am4core.Scrollbar();
 
-var chart = AmCharts.makeChart( "chartdivDemands", {
-    "type": "pie",
-    "theme": "light",
-    "dataLoader": {
-        "url": "/datademands",
-        "reload": 60,
-        "noStyles": true,
-    },
-    "titleField": "title",
-    "valueField": "value",
-    "labelRadius": 5,
+// Add data
+chart.dataSource.url = "/dataclients";
+chart.dataSource.reloadFrequency = 300000; // 5 minutos
+chart.dataSource.load();
 
-    "radius": "42%",
-    "innerRadius": "60%",
-    "labelText": "[[title]]",
-    "export": {
-      "enabled": true
-    }
-  } );
+// Create axes
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "country";
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.renderer.minGridDistance = 30;
+categoryAxis.renderer.labels.template.horizontalCenter = "right";
+categoryAxis.renderer.labels.template.verticalCenter = "middle";
+categoryAxis.renderer.labels.template.rotation = 270;
+categoryAxis.tooltip.disabled = true;
+categoryAxis.renderer.minHeight = 110;
 
-var chartdivProducts = AmCharts.makeChart( "chartdivProducts", {
-    "type": "funnel",
-    "theme": "light",
-    "dataLoader": {
-        "url": "/api/dashboard/dataproducts",
-        "reload": 60,
-        "noStyles": true,
-    },
-    "balloon": {
-        "fixedPosition": true
-    },
-    "valueField": "value",
-    "titleField": "title",
-    "marginRight": 120,
-    "marginLeft": 12.5,
-    "startX": 500,
-    "depth3D": 100,
-    "angle": 40,
-    "outlineAlpha": 1,
-    "outlineColor": "#FFFFFF",
-    "outlineThickness": 2,
-    "labelPosition": "right",
-    "balloonText": "[[title]]: [[value]][[description]]",
-    "export": {
-        "enabled": true
-    }
-} );
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxis.renderer.minWidth = 50;
+
+// Create series
+var series = chart.series.push(new am4charts.ColumnSeries());
+series.sequencedInterpolation = true;
+series.dataFields.valueY = "visits";
+series.dataFields.categoryX = "country";
+series.tooltipText = "[{categoryX}: bold]{valueY}[/]";
+series.columns.template.strokeWidth = 0;
+
+series.tooltip.pointerOrientation = "vertical";
+
+series.columns.template.column.cornerRadiusTopLeft = 40;
+series.columns.template.column.cornerRadiusTopRight = 40;
+//series.columns.template.column.fillOpacity = 0.8;
+
+// Cursor
+chart.cursor = new am4charts.XYCursor();
+
+
+// Create chart instance
+var demands = am4core.create("chartdivDemands", am4charts.PieChart);
+
+// Add data
+demands.dataSource.url = "/datademands";
+demands.dataSource.reloadFrequency = 300000; // 5 minutos
+demands.dataSource.load();
+
+// Add and configure Series
+var pieSeries = demands.series.push(new am4charts.PieSeries());
+pieSeries.dataFields.value = "value";
+pieSeries.dataFields.category = "title";
+pieSeries.innerRadius = am4core.percent(50);
+pieSeries.ticks.template.disabled = true;
+pieSeries.labels.template.disabled = true;
+
+let rgm = new am4core.RadialGradientModifier();
+rgm.brightnesses.push(-0.8, -0.8, -0.5, 0, - 0.5);
+pieSeries.slices.template.fillModifier = rgm;
+pieSeries.slices.template.strokeModifier = rgm;
+pieSeries.slices.template.strokeOpacity = 0.4;
+pieSeries.slices.template.strokeWidth = 0;
+
+demands.legend = new am4charts.Legend();
+demands.legend.position = "bottom";
+
+
+am4core.useTheme(am4themes_dataviz);
+let products = am4core.create("chartdivProducts", am4charts.SlicedChart);
+products.dataSource.url = "/api/dashboard/dataproducts";
+products.dataSource.reloadFrequency = 300000; // 5 minutos
+products.dataSource.load();
+
+let teste = products.series.push(new am4charts.PyramidSeries());
+teste.dataFields.value = "value";
+teste.dataFields.category = "title";
+teste.alignLabels = true;
+teste.valueIs = "height";
