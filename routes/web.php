@@ -42,6 +42,7 @@ Route::group([
     Route::get('confirm/{id}', 'DemandsController@confirmDemand');
     Route::get('prepear/{id}', 'DemandsController@preparingDemand');
     Route::get('withdrawal/{id}', 'DemandsController@withdrawalDemand');
+    Route::get('/paid/{id}', 'DemandsController@paidDemand');
     Route::get('/getlist/{id}', 'DemandsController@getListDemands');
     Route::get('/{id}', 'DemandsController@getDemand');
 });

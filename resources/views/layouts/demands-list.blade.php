@@ -118,8 +118,8 @@
                                                 <h4><strong>Status:</strong> {{$demand->status_demand->description}}</h4>
                                             </div>
                                             <div class="col-md-5">
-                                                <button type="button" class="btn m-btn--pill m-btn--air btn-success retirada_demand" id="{{$demand->id}}">Em preparo</button>
-                                                <button type="button" class="btn m-btn--pill m-btn--air btn-danger cancel_demand" id="{{$demand->id}}">Cancelar pedido</button>
+                                                    <button type="button" class="btn m-btn--pill m-btn--air btn-success preparo_demand" id="{{$demand->id}}">Avançar</button>
+                                                <button type="button" class="btn m-btn--pill m-btn--air btn-danger cancel_demand_panel" id="{{$demand->id}}">Cancelar</button>
                                             </div>
                                             <div class="col-md-3">
                                                 <h2><strong>Total:</strong> R$ {{str_replace('.', ',', round($total, 2))}}</h2>
@@ -213,8 +213,11 @@
                                                 <h4><strong>Status:</strong> {{$demand->status_demand->description}}</h4>
                                             </div>
                                             <div class="col-md-5">
-                                                <button type="button" class="btn m-btn--pill m-btn--air btn-info preparo_demand" id="{{$demand->id}}">P/ Retirada</button>
-                                                <button type="button" class="btn m-btn--pill m-btn--air btn-danger cancel_demand" id="{{$demand->id}}">Cancelar pedido</button>
+                                                <a href="#" class="btn btn-metal m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--outline-2x m-btn--pill m-btn--air return_demand" data-status-id="4" id="{{$demand->id}}">
+                                                    <i class="fa fa-rotate-left"></i>
+                                                </a>
+                                                <button type="button" class="btn m-btn--pill m-btn--air btn-success retirada_demand" id="{{$demand->id}}">Avançar</button>
+                                                <button type="button" class="btn m-btn--pill m-btn--air btn-danger cancel_demand_panel" id="{{$demand->id}}">Cancelar</button>
                                             </div>
                                             <div class="col-md-3">
                                                 <h2><strong>Total:</strong> R$ {{str_replace('.', ',', round($total, 2))}}</h2>
@@ -307,8 +310,11 @@
                                                 <h4><strong>Status:</strong> {{$demand->status_demand->description}}</h4>
                                             </div>
                                             <div class="col-md-5">
-                                                <button type="button" class="btn m-btn--pill m-btn--air btn-metal confirm_demand" id="{{$demand->id}}">Finalizar</button>
-                                                <button type="button" class="btn m-btn--pill m-btn--air btn-danger cancel_demand" id="{{$demand->id}}">Cancelar pedido</button>
+                                                <a href="#" class="btn btn-metal m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--outline-2x m-btn--pill m-btn--air return_demand" data-status-id="1" id="{{$demand->id}}">
+                                                    <i class="fa fa-rotate-left"></i>
+                                                </a>
+                                                <button type="button" class="btn m-btn--pill m-btn--air btn-primary confirm_demand" id="{{$demand->id}}">Finalizar</button>
+                                                <button type="button" class="btn m-btn--pill m-btn--air btn-danger cancel_demand_panel" id="{{$demand->id}}">Cancelar</button>
                                             </div>
                                             <div class="col-md-3">
                                                 <h2><strong>Total:</strong> R$ {{str_replace('.', ',', round($total, 2))}}</h2>

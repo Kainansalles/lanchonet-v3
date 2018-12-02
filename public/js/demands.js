@@ -32,11 +32,6 @@ $(function(){
             $(this).addClass('active');
             $('#table_demands').DataTable().ajax.url( '/admin/pedidos/all').load();
         });
-        $("body").ready(function(){
-            if($('#status_delivery').hasClass('active')){
-                $('#table_demands tbody tr:first td:last-child').append("<div class='m-spinner m-spinner--warning m-spinner--lg'></div>");
-            }
-        });
     })
     .DataTable({
         orderFixed: [ 3, 'desc' ],
@@ -71,8 +66,8 @@ $(function(){
         $.getJSON( "/admin/pedidos/getlist/" + id, function( data ) {
             $('#demands-list').html(data.view);
             $("#demands-list .nav-item").each(function() {
-                //$("#demands-list .nav-link[data-status-id='" + id + "']").addClass('active show');
                 $("#demands-list .nav-link[data-status-id='" + id + "']").click();
+                return false;
             });
             $('body').on('click', '.retirada_demand',function(){
                 sendRequest('/admin/pedidos/prepear/', $(this).attr('id'));
@@ -80,7 +75,7 @@ $(function(){
             $('body').on('click', '.preparo_demand',function(){
                 sendRequest('/admin/pedidos/withdrawal/', $(this).attr('id'));
             });
-            cancelDemand();
+            //cancelDemand();
         });
     }
 

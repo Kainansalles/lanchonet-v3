@@ -213,4 +213,28 @@ class DemandsController extends Controller
         ]);
     }
 
+
+    /**
+     * Método para voltar ao pedido como pago
+     *@param $id
+     *@return json
+     */
+    public function paidDemand($id){
+        if(is_numeric($id)){
+            $demand = Demand::find($id);
+
+            if($demand){
+                $demand->status_demand_id = 4;
+                $demand->save();
+                return response()->json([
+                    'success' => true
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+
 }

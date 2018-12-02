@@ -85,7 +85,7 @@ class ClientsController extends Controller{
             'nickname' => 'string',
             'telephone' => 'numeric',
             'dt_birth' => 'date',
-            'name' => 'required|string',
+            'name' => 'string',
         ];
 
         if(array_key_exists('edituser', $request->all())) {

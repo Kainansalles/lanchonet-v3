@@ -8,18 +8,18 @@ $(function(){
         var id = $('#current-demand').val();
         $.getJSON( "/admin/pedidos/getlist/" + id, function( data ) {
             $('#demands-list').html(data.view);
-            $("#demands-list .nav-item").each(function() {
-                //$("#demands-list .nav-link[data-status-id='" + id + "']").addClass('active show');
+            $("#demands-list .nav-item").each(function(k, e) {
                 $("#demands-list .nav-link[data-status-id='" + id + "']").click();
+                return false;
             });
         });
     }
 
-    $('body').on('click', '.retirada_demand',function(){
+    $('body').on('click', '.preparo_demand',function(){
         sendRequest('/admin/pedidos/prepear/', $(this).attr('id'));
         getList();
     });
-    $('body').on('click', '.preparo_demand',function(){
+    $('body').on('click', '.retirada_demand',function(){
         sendRequest('/admin/pedidos/withdrawal/', $(this).attr('id'));
         getList();
     });
@@ -40,6 +40,46 @@ $(function(){
                 getList();
             }
         });
+    });
 
+    $('body').on('click', '.cancel_demand_panel', function(){
+        var id = $(this).attr('id');
+        swal({
+            title: "Você tem certeza?",
+            text: "Uma vez cancelado, você não poderá recuperar este pedido!",
+            type: "error",
+            showCancelButton: !0,
+            confirmButtonText: "Sim!",
+            cancelButtonText: "Não!"
+        }).then(function(e) {
+            if(e.value){
+                sendRequest('/admin/pedidos/cancel/', id);
+                swal("Bom trabalho!", "Pedido foi cancelado!", "success");
+                getList();
+            }
+        });
+    });
+
+    $('body').on('click', '.return_demand', function(){
+        var id = $(this).attr('id');
+        var data_status_id = $(this).attr('data-status-id');
+        swal({
+            title: "Você tem certeza?",
+            text: "Você almente quer retornar esse pedido ao status anterior!",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "Sim!",
+            cancelButtonText: "Não!"
+        }).then(function(e) {
+            if(e.value){
+                if(data_status_id == 4){
+                    sendRequest('/admin/pedidos/paid/', id);
+                }else{
+                    sendRequest('/admin/pedidos/prepear/', id);
+                }
+                swal("Bom trabalho!", "Pedido foi retornado ao status anterior!", "success");
+                getList();
+            }
+        });
     });
 });
