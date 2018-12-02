@@ -44,7 +44,7 @@ var chart = AmCharts.makeChart("chartdivDemandsxProducts", {
     "titleField": "title",
     "valueField": "value",
     "labelRadius": 5,
-     "radius": "42%",
+    "radius": "42%",
     "innerRadius": "60%",
     "labelText": "[[title]]",
     "export": {
