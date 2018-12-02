@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-<div class="m-grid__item m-grid__item--fluid m-wrapper" id="content-table-demands">
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
     <!-- BEGIN: Subheader -->
     <div class="m-subheader ">
         <div class="d-flex align-items-center">
@@ -40,7 +40,7 @@
     <div id="demands-list"></div>
 
     <!-- END: Subheader -->
-    <div class="m-content">
+    <div class="m-content" id="content-table-demands">
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__body">
                 <div class="form-group m-form__group row">
@@ -49,7 +49,7 @@
                             <span>
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>
-                                    Lista de entregas
+                                    Todos
                                 </span>
                             </span>
                         </button>

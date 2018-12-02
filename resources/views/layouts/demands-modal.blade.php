@@ -49,13 +49,13 @@
         </table>
         <!-- Modal Footer -->
         <div class="modal-footer">
-            @if ($allows_low)
+            {{-- @if ($allows_low)
                 <div class="col-md-7 buttons-options" style="text-align: left;">
                     <button type="button" class="btn m-btn--pill m-btn--air btn-success btn-lg confirm_demand_product">Confirmar</button>
                     <button type="button" class="btn m-btn--pill m-btn--air btn-danger btn-lg cancel_demand_product">Cancelar</button>
                 </div>
-            @endif
-            <div class="col-md-5">
+            @endif--}}
+            <div class="col-md-5 offset-md-7">
                 <h4><strong>Valor total:</strong> R$ {{str_replace('.', ',', round($total, 2))}}</h4>
             </div>
         </div>

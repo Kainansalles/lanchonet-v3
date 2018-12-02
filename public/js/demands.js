@@ -49,9 +49,9 @@ $(function(){
         ],
         "columnDefs": [
             { "width": "1%", "targets": 0 },
-            { "width": "10%", "targets": 1 },
-            { "width": "5%", "targets": 2 },
-            { "width": "5%", "targets": 3 },
+            { "width": "15%", "targets": 1 },
+            { "width": "7%", "targets": 2 },
+            { "width": "7%", "targets": 3 },
             { "width": "10%", "targets": 4 }
         ],
         dom: 'flrtip',
@@ -63,12 +63,27 @@ $(function(){
     // Método para renderizar painel de demanda
     function panelDemand(){
         var id = $('#current-demand').val();
-        $.getJSON( "/admin/pedidos/getlist/" + id, function( data ) {
-            $('#demands-list').html(data.view);
-            $("#demands-list .nav-item").each(function() {
-                $("#demands-list .nav-link[data-status-id='" + id + "']").click();
-                return false;
-            });
+        $.ajax({
+            url:'/admin/pedidos/getlist/' + id,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            beforeSend: function() {
+                mApp.block("#demands-list", {
+                    overlayColor: "#000000",
+                    type: "loader",
+                    state: "primary",
+                    message: "Processando.."
+                });
+            },
+            success: function(data){
+                mApp.unblock("#demands-list");
+                $('#demands-list').html(data.view);
+                $("#demands-list .nav-item").each(function() {
+                    $("#demands-list .nav-link[data-status-id='" + id + "']").click();
+                    return false;
+                });
+            }
         });
     }
 
@@ -96,7 +111,7 @@ $(function(){
                     text: "Uma vez entregue, você não poderá recuperar este pedido!",
                     type: "warning",
                     showCancelButton: !0,
-                    confirmButtonText: "Sim, deletar!",
+                    confirmButtonText: "Sim, !",
                     cancelButtonText: "Não, cancelar!"
                 }).then(function(e) {
                     if(e.value){

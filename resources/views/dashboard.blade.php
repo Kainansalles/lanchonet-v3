@@ -47,13 +47,13 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                            Clientes
+                                            Faturamento mensal
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="m-portlet__body">
-                                <div id="chartdivClients"></div>
+                                <div id="chartdivDemandsxProducts"></div>
                             </div>
                         </div>
                         <!--end::Portlet-->
@@ -100,7 +100,7 @@
 
 
                 <style>
-                    #chartdivClients, #chartdivDemands, #chartdivProducts {
+                    #chartdivDemandsxProducts, #chartdivDemands, #chartdivProducts {
                         width	: 100%;
                         height	: 400px;
                     }
@@ -118,13 +118,9 @@
 @endsection
 
 @push('lanchonet-js')
-    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-    <script src="https://www.amcharts.com/lib/3/pie.js"></script>
-    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
-    {{-- <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script> --}}
-    <script src="https://www.amcharts.com/lib/3/funnel.js"></script>
-    <script src="https://www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js" type="text/javascript"></script>
-    {{-- <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" /> --}}
-    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/dataviz.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
     <script src="{{ asset('js/dashboard.js') }}" type="text/javascript"></script>
 @endpush

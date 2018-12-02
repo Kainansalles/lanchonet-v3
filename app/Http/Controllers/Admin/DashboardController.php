@@ -38,7 +38,7 @@ class DashboardController extends Controller
     }
 
     public function dataClients(){
-        $data = Client::select(\DB::raw('count(*) as visits'), \DB::raw('DATE_FORMAT(created_at,\' %Y-%m\') AS "country"'))
+        $data = DemandxProduct::select(\DB::raw('sum(price_registred) as visits'), \DB::raw('DATE_FORMAT(created_at,\' %Y-%m\') AS "country"'))
         ->groupBy(\DB::raw('country'))
         ->get();
         return response()->json($data);

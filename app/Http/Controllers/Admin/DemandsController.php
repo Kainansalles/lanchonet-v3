@@ -45,13 +45,13 @@ class DemandsController extends Controller
      *@return JSON
      */
     public function getAllDemands(){
-        $model = Demand::with(['client' ,'status_demand'])->whereIn('status_demand_id', [4])->get();
+        $model = Demand::with(['client' ,'status_demand'])->get();
+        //->whereIn('status_demand_id', [4])
         return DataTables::collection($model)
             ->addColumn('action', function ($model) {
                 return "
                 <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>
-                <button class='btn btn-success confirm_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-check'></span></button>
-                <button class='btn btn-danger cancel_demand' id='" . $model->id ."'><span class='fa fa-trash'></span></button>";
+";
             })
             ->toJson();
     }
@@ -66,7 +66,7 @@ class DemandsController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $demands,
-                'view' => view('layouts.demands-list')->with(['demands' => $demands ])->render(),
+                'view' => view('layouts.demands-list')->with(['demands' => $demands, 'totalPago'=> count($this->getDatalistDemands(4)) ])->render(),
             ]);
         }
 
@@ -78,6 +78,7 @@ class DemandsController extends Controller
     private function getDatalistDemands($id){
         return Demand::with(['client' ,'status_demand', 'demand_x_product', 'demand_x_product.product'])
         ->whereIn('status_demand_id', [$id])
+        ->whereDate('hour_recall', '=', date('Y-m-d'))
         ->orderBy('hour_recall', 'DESC')
         ->limit(4)
         ->get();
@@ -91,14 +92,7 @@ class DemandsController extends Controller
         $model = Demand::with(['client' ,'status_demand'])->whereIn('status_demand_id', [$id])->get();
         return  DataTables::collection($model)
             ->addColumn('action', function ($model) {
-                if($model->status_demand->allows_low){
-                    return "
-                    <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>
-                    <button class='btn btn-success confirm_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-check'></span></button>
-                    <button class='btn btn-danger cancel_demand' id='" . $model->id ."'><span class='fa fa-trash'></span></button>";
-                }
-                return "
-                <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>";
+                    return "<button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>";
             })
             ->toJson();
     }
