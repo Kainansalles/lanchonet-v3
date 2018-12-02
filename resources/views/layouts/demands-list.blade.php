@@ -118,7 +118,7 @@
                                                 <h4><strong>Status:</strong> {{$demand->status_demand->description}}</h4>
                                             </div>
                                             <div class="col-md-5">
-                                                    <button type="button" class="btn m-btn--pill m-btn--air btn-success preparo_demand" id="{{$demand->id}}">Avançar</button>
+                                                <button type="button" class="btn m-btn--pill m-btn--air btn-success preparo_demand" id="{{$demand->id}}">Avançar</button>
                                                 <button type="button" class="btn m-btn--pill m-btn--air btn-danger cancel_demand_panel" id="{{$demand->id}}">Cancelar</button>
                                             </div>
                                             <div class="col-md-3">

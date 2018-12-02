@@ -69,13 +69,6 @@ $(function(){
                 $("#demands-list .nav-link[data-status-id='" + id + "']").click();
                 return false;
             });
-            $('body').on('click', '.retirada_demand',function(){
-                sendRequest('/admin/pedidos/prepear/', $(this).attr('id'));
-            });
-            $('body').on('click', '.preparo_demand',function(){
-                sendRequest('/admin/pedidos/withdrawal/', $(this).attr('id'));
-            });
-            //cancelDemand();
         });
     }
 
