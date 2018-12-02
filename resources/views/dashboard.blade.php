@@ -120,7 +120,6 @@
 @push('lanchonet-js')
     <script src="https://www.amcharts.com/lib/4/core.js"></script>
     <script src="https://www.amcharts.com/lib/4/charts.js"></script>
-    <script src="https://www.amcharts.com/lib/4/themes/dataviz.js"></script>
     <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
     <script src="{{ asset('js/dashboard.js') }}" type="text/javascript"></script>
 @endpush

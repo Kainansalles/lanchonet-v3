@@ -69,8 +69,6 @@ pieSeries.slices.template.strokeWidth = 0;
 demands.legend = new am4charts.Legend();
 demands.legend.position = "bottom";
 
-
-am4core.useTheme(am4themes_dataviz);
 let products = am4core.create("chartdivProducts", am4charts.SlicedChart);
 products.dataSource.url = "/api/dashboard/dataproducts";
 products.dataSource.reloadFrequency = 300000; // 5 minutos
