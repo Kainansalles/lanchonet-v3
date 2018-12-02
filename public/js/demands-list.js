@@ -15,16 +15,17 @@ $(function(){
         });
     }
 
-    $('body').on('click', '.preparo_demand',function(){
+    $('.preparo_demand').click(function(){
         sendRequest('/admin/pedidos/prepear/', $(this).attr('id'));
         getList();
     });
-    $('body').on('click', '.retirada_demand',function(){
+
+    $('.retirada_demand').click(function(){
         sendRequest('/admin/pedidos/withdrawal/', $(this).attr('id'));
         getList();
     });
 
-    $('body').on('click', '.confirm_demand', function(){
+    $('.confirm_demandd').click(function(){
         var id = $(this).attr('id');
         swal({
             title: "Você tem certeza?",
@@ -42,7 +43,7 @@ $(function(){
         });
     });
 
-    $('body').on('click', '.cancel_demand_panel', function(){
+    $('.cancel_demand_panel').click(function(){
         var id = $(this).attr('id');
         swal({
             title: "Você tem certeza?",
@@ -60,7 +61,7 @@ $(function(){
         });
     });
 
-    $('body').on('click', '.return_demand', function(){
+    $('.return_demand').click(function(){
         var id = $(this).attr('id');
         var data_status_id = $(this).attr('data-status-id');
         swal({
