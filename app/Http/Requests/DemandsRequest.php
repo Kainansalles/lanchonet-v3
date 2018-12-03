@@ -51,7 +51,7 @@ class DemandsRequest extends FormRequest
                 $fail(':attribute quantidade indisponivel para este produto!');
             },
             'make.products.*.product_id' => 'required|integer|exists:products,id',
-            'make.products.*.quantity' => 'required|integer',
+            'make.products.*.quantity' => 'required|integer|min:1',
             'make.products.*.price_registred' => 'required|numeric'
         ];
     }
