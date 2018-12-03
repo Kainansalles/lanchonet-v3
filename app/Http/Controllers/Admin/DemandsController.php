@@ -45,13 +45,13 @@ class DemandsController extends Controller
      *@return JSON
      */
     public function getAllDemands(){
-        $model = Demand::with(['client' ,'status_demand'])->whereIn('status_demand_id', [4])->get();
+        $model = Demand::with(['client' ,'status_demand'])->get();
+        //->whereIn('status_demand_id', [4])
         return DataTables::collection($model)
             ->addColumn('action', function ($model) {
                 return "
                 <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>
-                <button class='btn btn-success confirm_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-check'></span></button>
-                <button class='btn btn-danger cancel_demand' id='" . $model->id ."'><span class='fa fa-trash'></span></button>";
+";
             })
             ->toJson();
     }
@@ -60,13 +60,13 @@ class DemandsController extends Controller
      * Método responsavel por retornar os 4 proximos pedidos
      *@return JSON
      */
-    public function getListDemands(){
-        $demands = $this->getDatalistDemands();
+    public function getListDemands($id){
+        $demands = $this->getDatalistDemands($id);
         if(!empty($demands)){
             return response()->json([
                 'success' => true,
                 'data' => $demands,
-                'view' => view('layouts.demands-list')->with(['demands' => $demands ])->render(),
+                'view' => view('layouts.demands-list')->with(['demands' => $demands, 'totalPago'=> count($this->getDatalistDemands(4)) ])->render(),
             ]);
         }
 
@@ -75,9 +75,10 @@ class DemandsController extends Controller
         ]);
     }
 
-    private function getDatalistDemands(){
+    private function getDatalistDemands($id){
         return Demand::with(['client' ,'status_demand', 'demand_x_product', 'demand_x_product.product'])
-        ->whereIn('status_demand_id', [4])
+        ->whereIn('status_demand_id', [$id])
+        ->whereDate('hour_recall', '=', date('Y-m-d'))
         ->orderBy('hour_recall', 'DESC')
         ->limit(4)
         ->get();
@@ -91,14 +92,7 @@ class DemandsController extends Controller
         $model = Demand::with(['client' ,'status_demand'])->whereIn('status_demand_id', [$id])->get();
         return  DataTables::collection($model)
             ->addColumn('action', function ($model) {
-                if($model->status_demand->allows_low){
-                    return "
-                    <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>
-                    <button class='btn btn-success confirm_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-check'></span></button>
-                    <button class='btn btn-danger cancel_demand' id='" . $model->id ."'><span class='fa fa-trash'></span></button>";
-                }
-                return "
-                <button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>";
+                    return "<button class='btn btn-primary view_demand' id='" . $model->id . "' style='margin-right:3px;'><span class='fa fa-search'></span></button>";
             })
             ->toJson();
     }
@@ -201,6 +195,30 @@ class DemandsController extends Controller
 
             if($demand){
                 $demand->status_demand_id = 5;
+                $demand->save();
+                return response()->json([
+                    'success' => true
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+
+
+    /**
+     * Método para voltar ao pedido como pago
+     *@param $id
+     *@return json
+     */
+    public function paidDemand($id){
+        if(is_numeric($id)){
+            $demand = Demand::find($id);
+
+            if($demand){
+                $demand->status_demand_id = 4;
                 $demand->save();
                 return response()->json([
                     'success' => true

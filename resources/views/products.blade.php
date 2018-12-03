@@ -143,7 +143,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4">
-                            <img src="" class="img-responsive" id="imagem" alt="Foto do produto">
+                            <img src="" class="img-responsive" id="imagem" alt="Foto do produto" style="max-width: 200px; max-height: 120px;">
                         </div>
                     </div>
 

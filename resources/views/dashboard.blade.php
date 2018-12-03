@@ -47,13 +47,13 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                            Clientes
+                                            Faturamento mensal
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="m-portlet__body">
-                                <div id="chartdivClients"></div>
+                                <div id="chartdivDemandsxProducts"></div>
                             </div>
                         </div>
                         <!--end::Portlet-->
@@ -100,7 +100,7 @@
 
 
                 <style>
-                    #chartdivClients, #chartdivDemands, #chartdivProducts {
+                    #chartdivDemandsxProducts, #chartdivDemands, #chartdivProducts {
                         width	: 100%;
                         height	: 400px;
                     }
@@ -117,7 +117,7 @@
 
 @endsection
 
-@push('lanchonet-js')
+    @push('lanchonet-js')
     <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
     <script src="https://www.amcharts.com/lib/3/pie.js"></script>
     <script src="https://www.amcharts.com/lib/3/serial.js"></script>

@@ -24,3 +24,16 @@ function messageError(value){
         }
     });
 }
+
+// Método para enviar requisiçao
+function sendRequest(url, id){
+    $.ajax({
+        url: url + id,
+        dataType: 'json',
+        success: function(data){
+            if(data.success){
+                return true;
+            }
+        }
+    });
+}

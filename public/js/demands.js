@@ -1,10 +1,10 @@
 $(function(){
     $('body').addClass('m-brand--minimize m-aside-left--minimize');
-    panelDemand();
     setInterval(function() {
         $('#table_demands').DataTable().ajax.reload();
         panelDemand();
-    }, 5000 );
+    }, 600000 );
+    panelDemand();
 
     $("#filter_status_demand").select2();
 
@@ -32,11 +32,6 @@ $(function(){
             $(this).addClass('active');
             $('#table_demands').DataTable().ajax.url( '/admin/pedidos/all').load();
         });
-        $("body").ready(function(){
-            if($('#status_delivery').hasClass('active')){
-                $('#table_demands tbody tr:first td:last-child').append("<div class='m-spinner m-spinner--warning m-spinner--lg'></div>");
-            }
-        });
     })
     .DataTable({
         orderFixed: [ 3, 'desc' ],
@@ -54,9 +49,9 @@ $(function(){
         ],
         "columnDefs": [
             { "width": "1%", "targets": 0 },
-            { "width": "10%", "targets": 1 },
-            { "width": "5%", "targets": 2 },
-            { "width": "5%", "targets": 3 },
+            { "width": "15%", "targets": 1 },
+            { "width": "7%", "targets": 2 },
+            { "width": "7%", "targets": 3 },
             { "width": "10%", "targets": 4 }
         ],
         dom: 'flrtip',
@@ -67,15 +62,28 @@ $(function(){
 
     // Método para renderizar painel de demanda
     function panelDemand(){
-        $.getJSON( "/admin/pedidos/getlist", function( data ) {
-            $('#demands-list').html(data.view);
-            $('body').on('click', '.retirada_demand',function(){
-                sendRequest('/admin/pedidos/prepear/', $(this).attr('id'));
-            });
-            $('body').on('click', '.preparo_demand',function(){
-                sendRequest('/admin/pedidos/withdrawal/', $(this).attr('id'));
-            });
-            cancelDemand();
+        var id = $('#current-demand').val();
+        $.ajax({
+            url:'/admin/pedidos/getlist/' + id,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            beforeSend: function() {
+                mApp.block("#demands-list", {
+                    overlayColor: "#000000",
+                    type: "loader",
+                    state: "primary",
+                    message: "Processando.."
+                });
+            },
+            success: function(data){
+                mApp.unblock("#demands-list");
+                $('#demands-list').html(data.view);
+                $("#demands-list .nav-item").each(function() {
+                    $("#demands-list .nav-link[data-status-id='" + id + "']").click();
+                    return false;
+                });
+            }
         });
     }
 
@@ -103,7 +111,7 @@ $(function(){
                     text: "Uma vez entregue, você não poderá recuperar este pedido!",
                     type: "warning",
                     showCancelButton: !0,
-                    confirmButtonText: "Sim, deletar!",
+                    confirmButtonText: "Sim, !",
                     cancelButtonText: "Não, cancelar!"
                 }).then(function(e) {
                     if(e.value){
@@ -148,18 +156,4 @@ $(function(){
 
         });
     }
-
-    // Método para enviar requisiçao
-    function sendRequest(url, id){
-        $.ajax({
-            url: url + id,
-            dataType: 'json',
-            success: function(data){
-                if(data.hasOwnProperty("success")){
-                    $('#table_demands').DataTable().ajax.reload();
-                }
-            }
-        });
-    }
-
 });

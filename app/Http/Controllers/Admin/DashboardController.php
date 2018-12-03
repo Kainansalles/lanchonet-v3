@@ -38,7 +38,7 @@ class DashboardController extends Controller
     }
 
     public function dataClients(){
-        $data = Client::select(\DB::raw('count(*) as visits'), \DB::raw("LPAD(CAST(EXTRACT(Month from created_at) AS VARCHAR), '2', '0') || '-' ||
+        $data = DemandxProduct::select(\DB::raw('sum(price_registred) as visits'), \DB::raw("LPAD(CAST(EXTRACT(Month from created_at) AS VARCHAR), '2', '0') || '-' ||
         CAST(Extract(Year from created_at) AS VARCHAR) AS country"))
         ->groupBy(\DB::raw('country'))
         ->get();

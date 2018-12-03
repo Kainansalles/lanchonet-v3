@@ -1,11 +1,11 @@
-var chart = AmCharts.makeChart("chartdivClients", {
+var chart = AmCharts.makeChart("chartdivDemandsxProducts", {
     "theme": "light",
     "type": "serial",
     "startDuration": 1,
     "dataDateFormat": "YYYY-MM",
     "dataLoader": {
         "url": "/dataclients",
-        "reload": 60,
+        "reload": 300,
         "noStyles": true,
     },
     "graphs": [{
@@ -32,21 +32,18 @@ var chart = AmCharts.makeChart("chartdivClients", {
     "export": {
         "enabled": true
         }
-
-});
-
-var chart = AmCharts.makeChart( "chartdivDemands", {
+ });
+ var chart = AmCharts.makeChart( "chartdivDemands", {
     "type": "pie",
     "theme": "light",
     "dataLoader": {
         "url": "/datademands",
-        "reload": 60,
+        "reload": 300,
         "noStyles": true,
     },
     "titleField": "title",
     "valueField": "value",
     "labelRadius": 5,
-
     "radius": "42%",
     "innerRadius": "60%",
     "labelText": "[[title]]",
@@ -54,13 +51,12 @@ var chart = AmCharts.makeChart( "chartdivDemands", {
       "enabled": true
     }
   } );
-
-var chartdivProducts = AmCharts.makeChart( "chartdivProducts", {
+ var chartdivProducts = AmCharts.makeChart( "chartdivProducts", {
     "type": "funnel",
     "theme": "light",
     "dataLoader": {
         "url": "/api/dashboard/dataproducts",
-        "reload": 60,
+        "reload": 300,
         "noStyles": true,
     },
     "balloon": {
