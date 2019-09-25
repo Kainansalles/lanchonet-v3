@@ -13,7 +13,8 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "tymon/jwt-auth": "0.5.*",
         "vlucas/valitron": "^1.4",
-        "yajra/laravel-datatables-oracle": "^8.0"
+        "yajra/laravel-datatables-oracle": "^8.0",
+        "php-amqplib/php-amqplib": ">=2.6.1"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

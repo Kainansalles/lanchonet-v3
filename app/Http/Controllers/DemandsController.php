@@ -15,18 +15,27 @@ use Tymon\JWTAuth\JWTAuth;
 use App\Models\Demand;
 use App\Models\Product;
 
+//RabbitMQ
+//use \App\Traits\RabbitMQTrait;
+use \App\Services\RabbitMQService;
+use PhpAmqpLib\Message\AMQPMessage;
+
 class DemandsController extends Controller
 {
+//    use RabbitMQTrait;
 
     /**
      * @var JWTAuth
      */
     private $jwtAuth;
 
-    public function __construct(JWTAuth $jwtAuth){
+    private $rabbitMQService;
+
+    public function __construct(JWTAuth $jwtAuth, RabbitMQService $rabbitMQService){
         \Config::set('jwt.user' , "App\Models\Client");
         \Config::set('auth.providers.users.model', \App\Models\Client::class);
         $this->jwtAuth = $jwtAuth;
+        $this->rabbitMQService = $rabbitMQService;
     }
     /**
      * Método para realizar um pedido
@@ -34,27 +43,56 @@ class DemandsController extends Controller
      *@return JSON
      */
     public function doDemand(DemandsRequest $request){
-        $data = $request->only('make')['make'];
-        DB::beginTransaction();
-        try {
-            $pedido = Demand::create($data);
-            $pedido->demand_x_product()->createMany($data['products']);
-            foreach ($data['products'] as $item) {
-                $product = Product::find($item['product_id']);
-                $product->decrement('quantity', $item['quantity']);
-            }
 
-            DB::commit();
+        try{
+            $this->rabbitMQService->connectionRabbit();
+            $queue = 'demands';
+            $this->rabbitMQService->queueDeclare($queue, false, true, false, false );
+
+            $msg = new AMQPMessage(
+                json_encode($request->only('make')),
+                array('delivery_mode' => 2) # make message persistent, so it is not lost if server crashes or quits
+            );
+
+            $this->rabbitMQService->channel->basic_publish(
+                $msg,               #message
+                '',                 #exchange
+                $queue     #routing key (queue)
+            );
+
+            $this->rabbitMQService->closeRabbit();
+
             return response()->json([
                 'success' => true,
-                'message' => 'Pedido realizado com sucesso!']);
+                'message' => 'Pedido realizado com sucesso, em alguns minutos aparecerá em sua listagem']);
 
-        } catch (\Exception $e) {
-            DB::rollback();
+        }catch (\Exception $e){
             return response()->json([
                 'success' => false,
                 'errors' => $e->getMessage()]);
         }
+
+//        $data = $request->only('make')['make'];
+//        DB::beginTransaction();
+//        try {
+//            $pedido = Demand::create($data);
+//            $pedido->demand_x_product()->createMany($data['products']);
+//            foreach ($data['products'] as $item) {
+//                $product = Product::find($item['product_id']);
+//                $product->decrement('quantity', $item['quantity']);
+//            }
+//
+//            DB::commit();
+//            return response()->json([
+//                'success' => true,
+//                'message' => 'Pedido realizado com sucesso!']);
+//
+//        } catch (\Exception $e) {
+//            DB::rollback();
+//            return response()->json([
+//                'success' => false,
+//                'errors' => $e->getMessage()]);
+//        }
     }
 
     /**

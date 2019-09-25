@@ -50,7 +50,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'demand',
-    'middleware' => 'jwt.auth'
+    //'middleware' => 'jwt.auth'
 ], function () {
     Route::post('/make', 'DemandsController@doDemand');
     Route::get('/all', 'DemandsController@getAllDemands');
