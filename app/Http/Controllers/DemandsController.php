@@ -102,23 +102,25 @@ class DemandsController extends Controller
         $callback = function ($msg) {
             DB::beginTransaction();
             try {
-                $data = json_decode($msg->body, true);
-                $pedido = Demand::create($data['make']);
+                $data = json_decode($msg->body, true)['make'];
+                $pedido = Demand::create($data);
                 $pedido->demand_x_product()->createMany($data['products']);
+
                 foreach ($data['products'] as $item) {
                     $product = Product::find($item['product_id']);
                     $product->decrement('quantity', $item['quantity']);
                 }
-                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
-                DB::commit();
 
+                DB::commit();
+                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+//
             } catch (\Exception $e) {
                 DB::rollback();
             }
         };
 
         $this->rabbitMQService->channel->queue_bind($queue, $exchange);
-//        $this->rabbitMQService->channel->basic_qos(null, 1, null);
+        $this->rabbitMQService->channel->basic_qos(null, 1, null);
         $this->rabbitMQService->channel->basic_consume($queue, '', false, false, false, false, $callback);
 
         while (count($this->rabbitMQService->channel->callbacks)) {
