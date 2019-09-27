@@ -113,18 +113,18 @@ class DemandsController extends Controller
 
                 DB::commit();
                 $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
-//
+
             } catch (\Exception $e) {
                 DB::rollback();
             }
         };
-
+        list($queue, $messageCount) = $this->rabbitMQService->channel->queue_declare($queue, true, false, true, false, false);
         $this->rabbitMQService->channel->queue_bind($queue, $exchange);
-        $this->rabbitMQService->channel->basic_qos(null, 1, null);
+//        $this->rabbitMQService->channel->basic_qos(null, 1, null);
         $this->rabbitMQService->channel->basic_consume($queue, '', false, false, false, false, $callback);
 
-        while (count($this->rabbitMQService->channel->callbacks)) {
-//        while ($this->rabbitMQService->channel->is_consuming()) {
+        while ($messageCount) {
+            list($queue, $messageCount) = $this->rabbitMQService->channel->queue_declare($queue, true, false, true, false, false);
             $this->rabbitMQService->channel->wait();
         }
 
